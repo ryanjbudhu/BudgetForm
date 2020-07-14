@@ -1,0 +1,7 @@
+[
+    { "title": "labor", "fulltime": [], "parttime": [] },
+    { "title": "equip", "capital": [], "noncapital": [] },
+    { "title": "consult", "consultants": [], "subcontracts": [] },
+    { "title": "expenses", "operating": [], "travel": [] },
+    { "title": "overhead", "rent": [], "utilities": [], "insurance": [] }
+]
