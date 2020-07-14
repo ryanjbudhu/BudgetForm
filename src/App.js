@@ -3,8 +3,10 @@ import logo from "./logo.svg";
 import "./App.css";
 
 import Main from "./pages/Main";
-let defaultData = require("./utils/default.json");
+import { Layout } from "antd";
+const { Header } = Layout;
 
+let defaultData = require("./utils/default.json");
 const useSessionState = (storageKey) => {
     const [data, setData] = useState(
         JSON.parse(sessionStorage.getItem(storageKey)) || defaultData
@@ -21,12 +23,21 @@ function App() {
     const onChange = (current) => setStep(current);
     const [data, setData] = useSessionState("VLProjectBudget");
     return (
-        <div className="App">
-            <header className="App-header">
+        <Layout>
+            <Header
+                style={{
+                    position: "fixed",
+                    zIndex: 2,
+                    width: "100%",
+                    textAlign: "center",
+                }}
+            >
                 <img src={logo} className="App-logo" alt="logo" />
-            </header>
-            <Main step={step} data={data} setData={setData} onChange={onChange} />
-        </div>
+            </Header>
+            <Layout>
+                <Main step={step} data={data} setData={setData} onChange={onChange} />
+            </Layout>
+        </Layout>
     );
 }
 
