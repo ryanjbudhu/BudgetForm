@@ -1,26 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import logo from "./logo.svg";
+import "./App.css";
+
+import Main from "./pages/Main";
+let defaultData = require("./utils/default.json");
+
+const useSessionState = (storageKey) => {
+    const [data, setData] = useState(
+        JSON.parse(sessionStorage.getItem(storageKey)) || defaultData
+    );
+    useEffect(() => {
+        const stringData = JSON.stringify(data);
+        sessionStorage.setItem(storageKey, stringData);
+    }, [data, storageKey]);
+    return [data, setData];
+};
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [step, setStep] = useState(0);
+    const onChange = (current) => setStep(current);
+    const [data, setData] = useSessionState("VLProjectBudget");
+    return (
+        <div className="App">
+            <header className="App-header">
+                <img src={logo} className="App-logo" alt="logo" />
+            </header>
+            <Main step={step} data={data} setData={setData} onChange={onChange} />
+        </div>
+    );
 }
 
 export default App;
