@@ -4,14 +4,15 @@ import ExportCSV from "../../components/ExportCSV";
 import BudgetSteps from "../../components/BudgetSteps";
 import BudgetPage from "../BudgetPage";
 
-// import styles from "./Main.module.scss";
+import styles from "./Main.module.scss";
 import { Layout, Col, Row } from "antd";
 const { Content } = Layout;
 
 export default function Main(props) {
+    console.log(props.data);
     return (
         <Content>
-            <Row>
+            <Row className={styles.row}>
                 <Col
                     span={5}
                     pull={5}
@@ -31,7 +32,7 @@ export default function Main(props) {
                     <BudgetPage
                         data={props.data}
                         step={props.step}
-                        onChange={props.setData}
+                        setData={props.setData}
                     />
                     {props.step + 1 === props.data.length && (
                         <ExportCSV csvData={props.data} fileName={"Pricing and Budget"} />
