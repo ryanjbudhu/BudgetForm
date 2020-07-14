@@ -1,23 +1,110 @@
 [
-    { "title": "labor", "label": "Labor", "fulltime": [], "parttime": [] },
+    {
+        "title": "labor",
+        "label": "Labor",
+        "items": [
+            {
+                "key": 0,
+                "name": "Full Time Personnel",
+                "children": [],
+                "quantity": null,
+                "rate": null
+            },
+            {
+                "key": 1,
+                "name": "Part Time Personnel",
+                "children": [],
+                "quantity": null,
+                "rate": null
+            }
+        ]
+    },
     {
         "title": "equip",
         "label": "Equiptment and Supplies",
-        "capital": [],
-        "noncapital": []
+        "items": [
+            {
+                "key": 0,
+                "name": "Capital Equipment >5k",
+                "children": [],
+                "quantity": null,
+                "rate": null
+            },
+            {
+                "key": 1,
+                "name": "Non-Capital Equipment <5k",
+                "children": [],
+                "quantity": null,
+                "rate": null
+            },
+            {
+                "key": 2,
+                "name": "Consumable Materials and Supplies",
+                "children": [],
+                "quantity": null,
+                "rate": null
+            }
+        ]
     },
-    { "title": "consult", "label": "Consultants", "consultants": [], "subcontracts": [] },
+    {
+        "title": "consult",
+        "label": "Consultants",
+        "items": [
+            {
+                "key": 0,
+                "name": "Consultants",
+                "children": [],
+                "quantity": null,
+                "rate": null
+            },
+            {
+                "key": 1,
+                "name": "Subcontracts",
+                "children": [],
+                "quantity": null,
+                "rate": null
+            }
+        ]
+    },
     {
         "title": "expenses",
         "label": "Non-Personnel Expenses",
-        "operating": [],
-        "travel": []
+        "items": [
+            {
+                "key": 0,
+                "name": "Major Operating Expenses",
+                "children": [],
+                "quantity": null,
+                "rate": null
+            },
+            {
+                "key": 1,
+                "name": "Travel, Meals, Meetings and Registration",
+                "children": [],
+                "quantity": null,
+                "rate": null
+            }
+        ]
     },
     {
         "title": "overhead",
         "label": "Overhead",
-        "rent": [],
-        "utilities": [],
-        "insurance": []
+        "items": [
+            { "key": 0, "name": "Rent", "children": [], "quantity": null, "rate": null },
+            {
+                "key": 1,
+                "name": "Utilities",
+                "children": [],
+                "quantity": null,
+                "rate": null
+            },
+            {
+                "key": 2,
+                "name": "Insurance",
+                "children": [],
+                "quantity": null,
+                "rate": null
+            }
+        ]
     }
 ]
