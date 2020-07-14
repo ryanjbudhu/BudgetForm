@@ -1,7 +1,23 @@
 [
-    { "title": "labor", "fulltime": [], "parttime": [] },
-    { "title": "equip", "capital": [], "noncapital": [] },
-    { "title": "consult", "consultants": [], "subcontracts": [] },
-    { "title": "expenses", "operating": [], "travel": [] },
-    { "title": "overhead", "rent": [], "utilities": [], "insurance": [] }
+    { "title": "labor", "label": "Labor", "fulltime": [], "parttime": [] },
+    {
+        "title": "equip",
+        "label": "Equiptment and Supplies",
+        "capital": [],
+        "noncapital": []
+    },
+    { "title": "consult", "label": "Consultants", "consultants": [], "subcontracts": [] },
+    {
+        "title": "expenses",
+        "label": "Non-Personnel Expenses",
+        "operating": [],
+        "travel": []
+    },
+    {
+        "title": "overhead",
+        "label": "Overhead",
+        "rent": [],
+        "utilities": [],
+        "insurance": []
+    }
 ]
