@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./BudgetPage.module.scss";
 
-import { Table, Input, InputNumber, Popconfirm, Form } from "antd";
+import { Table, Input, InputNumber, Popconfirm, Form, Button } from "antd";
 
 const capitalize = (tocap) => tocap.charAt(0).toUpperCase() + tocap.slice(1);
 
@@ -47,9 +47,10 @@ export default function BudgetPage(props) {
     const columnNames = Object.keys(newObj).filter(
         (key) => key !== "key" && key !== "children"
     );
-    const columns = columnNames.map((key) => ({
+    let columns = columnNames.map((key) => ({
         title: capitalize(key),
         dataIndex: key,
+        inputType: key === "name" ? "text" : "number",
         key: key,
     }));
 
@@ -59,12 +60,15 @@ export default function BudgetPage(props) {
 
     const isEditing = (record) => record.key === editingKey;
 
-    const columnFieldsValues = columnNames.map((name) => ({ [name]: "" }));
+    let columnFieldsValues = {};
+    columnNames.forEach((name) => (columnFieldsValues[name] = ""));
+
     const edit = (record) => {
         form.setFieldsValue({
             columnFieldsValues,
             ...record,
         });
+        console.log(columnFieldsValues);
         setEditingKey(record.key);
     };
 
@@ -81,11 +85,11 @@ export default function BudgetPage(props) {
             if (index > -1) {
                 const item = newData[index];
                 newData.splice(index, 1, { ...item, ...row });
-                props.onChange(newData);
+                props.setData(newData);
                 setEditingKey("");
             } else {
                 newData.push(row);
-                props.onChange(newData);
+                props.setData(newData);
                 setEditingKey("");
             }
         } catch (errInfo) {
@@ -100,23 +104,27 @@ export default function BudgetPage(props) {
             const editable = isEditing(record);
             return editable ? (
                 <span>
-                    <a
-                        href="javascript:;"
+                    <Button
+                        type="primary"
                         onClick={() => save(record.key)}
                         style={{
                             marginRight: 8,
                         }}
                     >
                         Save
-                    </a>
+                    </Button>
                     <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
-                        <a>Cancel</a>
+                        <Button type="link">Cancel</Button>
                     </Popconfirm>
                 </span>
             ) : (
-                <a disabled={editingKey !== ""} onClick={() => edit(record)}>
+                <Button
+                    type="link"
+                    disabled={editingKey !== ""}
+                    onClick={() => edit(record)}
+                >
                     Edit
-                </a>
+                </Button>
             );
         },
     });
@@ -124,8 +132,22 @@ export default function BudgetPage(props) {
     return (
         <div className={styles.content}>
             <h1>{props.data[props.step].label}</h1>
-            <p>This is page {props.step + 1}.</p>
-            <Table dataSource={props.data[props.step].items} columns={columns}></Table>
+            <Form form={form} component={false}>
+                <Table
+                    components={{
+                        body: {
+                            cell: EditableCell,
+                        },
+                    }}
+                    bordered
+                    dataSource={props.data[props.step].items}
+                    columns={columns}
+                    summary={(items) => {
+                        let total = 0;
+                        items.forEach((item) => {});
+                    }}
+                ></Table>
+            </Form>
         </div>
     );
 }
