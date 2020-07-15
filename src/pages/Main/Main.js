@@ -9,7 +9,11 @@ import { Layout, Col, Row } from "antd";
 const { Content } = Layout;
 
 export default function Main(props) {
-    console.log(props.data);
+    const setPageData = (pageData) => {
+        const newData = [...props.data];
+        newData[props.step].items = pageData;
+        props.setData(newData);
+    };
     return (
         <Content>
             <Row className={styles.row}>
@@ -30,9 +34,9 @@ export default function Main(props) {
                 </Col>
                 <Col span={19} push={5} style={{ textAlign: "center" }}>
                     <BudgetPage
-                        data={props.data}
+                        pageData={props.data[props.step]}
                         step={props.step}
-                        setData={props.setData}
+                        setPageData={setPageData}
                     />
                     {props.step + 1 === props.data.length && (
                         <ExportCSV csvData={props.data} fileName={"Pricing and Budget"} />
