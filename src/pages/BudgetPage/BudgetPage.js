@@ -112,38 +112,51 @@ export default class BudgetPage extends Component {
             editable: true,
             key: key,
         }));
-        this.columns.push({
-            title: "operation",
-            dataIndex: "operation",
-            render: (text, record) =>
-                this.props.pageData.items.length >= 1 ? (
-                    <>
-                        {record.children !== undefined && !record.header && (
-                            <Button
-                                type="link"
-                                onClick={() => this.handleAddChild(record.key)}
-                            >
-                                Add
-                            </Button>
-                        )}
-                        {record.header ? (
-                            <Button
-                                type="link"
-                                onClick={() => this.handleAddChild(record.key)}
-                            >
-                                Add
-                            </Button>
-                        ) : (
-                            <Popconfirm
-                                title="Sure to delete?"
-                                onConfirm={() => this.handleDelete(record.key)}
-                            >
-                                <Button type="link">Delete</Button>
-                            </Popconfirm>
-                        )}
-                    </>
-                ) : null,
-        });
+        this.columns.push(
+            {
+                title: "Total",
+                dataIndex: "total",
+                render: (text, record) => {
+                    console.log(record);
+                    let total =
+                        Number.parseInt(record.quantity) * Number.parseFloat(record.rate);
+                    if (isNaN(total)) total = 0;
+                    return `$${total.toFixed(2)}`;
+                },
+            },
+            {
+                title: "operation",
+                dataIndex: "operation",
+                render: (text, record) =>
+                    this.props.pageData.items.length >= 1 ? (
+                        <>
+                            {record.children !== undefined && !record.header && (
+                                <Button
+                                    type="link"
+                                    onClick={() => this.handleAddChild(record.key)}
+                                >
+                                    Add
+                                </Button>
+                            )}
+                            {record.header ? (
+                                <Button
+                                    type="link"
+                                    onClick={() => this.handleAddChild(record.key)}
+                                >
+                                    Add
+                                </Button>
+                            ) : (
+                                <Popconfirm
+                                    title="Sure to delete?"
+                                    onConfirm={() => this.handleDelete(record.key)}
+                                >
+                                    <Button type="link">Delete</Button>
+                                </Popconfirm>
+                            )}
+                        </>
+                    ) : null,
+            }
+        );
     }
 
     // Only drawback is that you can only have at most 26 main sections per page
