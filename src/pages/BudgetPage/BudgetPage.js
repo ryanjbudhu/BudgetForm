@@ -2,7 +2,7 @@ import React, { Component, useContext, useState, useEffect, useRef } from "react
 import styles from "./BudgetPage.module.scss";
 
 import { Table, Input, InputNumber, Popconfirm, Form, Button, Typography } from "antd";
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
 const capitalize = (tocap) => tocap.charAt(0).toUpperCase() + tocap.slice(1);
 
@@ -95,10 +95,9 @@ const EditableCell = ({
         (dataIndex === "quantity" || dataIndex === "total")
     ) {
         const total = record.children
-            .map((el) => el[dataIndex])
+            .map((el) => Number.parseFloat(el[dataIndex]))
             .reduce((accu, curr) => accu + curr);
-        console.log(dataIndex, total);
-        childNode = total;
+        childNode = <Text strong>{total}</Text>;
     }
 
     return <td {...restProps}>{childNode}</td>;
@@ -149,7 +148,7 @@ export default class BudgetPage extends Component {
                                 } else return 0;
                             })
                             .reduce((acc, curr) => acc + curr, 0);
-                        return `$${total.toFixed(2)}`;
+                        return <Text strong>{total.toFixed(2)}</Text>;
                     }
                 },
             },
@@ -298,24 +297,27 @@ export default class BudgetPage extends Component {
                     dataSource={pageData.items}
                     columns={columns}
                     summary={(pageData) => {
-                        console.log(pageData);
-                        let total = 0;
-                        pageData.forEach(({ quantity, rate }) => {
-                            if (
-                                !isNaN(Number.parseInt(quantity)) &&
-                                !isNaN(Number.parseFloat(rate))
+                        const total = pageData
+                            .map((el) =>
+                                el.children
+                                    .map(
+                                        (c) =>
+                                            Number.parseInt(c.quantity) *
+                                            Number.parseFloat(c.rate)
+                                    )
+                                    .reduce((acc, curr) => acc + curr)
                             )
-                                total +=
-                                    Number.parseInt(quantity) * Number.parseFloat(rate);
-                        });
+                            .reduce((acc, curr) => acc + curr);
                         return (
                             <Table.Summary.Row>
                                 <Table.Summary.Cell>Total</Table.Summary.Cell>
                                 <Table.Summary.Cell></Table.Summary.Cell>
                                 <Table.Summary.Cell></Table.Summary.Cell>
-                                <Table.Summary.Cell>{`$${total.toFixed(
-                                    2
-                                )}`}</Table.Summary.Cell>
+                                <Table.Summary.Cell>
+                                    <Text
+                                        style={{ fontWeight: "bolder" }}
+                                    >{`$${total.toFixed(2)}`}</Text>
+                                </Table.Summary.Cell>
                             </Table.Summary.Row>
                         );
                     }}
