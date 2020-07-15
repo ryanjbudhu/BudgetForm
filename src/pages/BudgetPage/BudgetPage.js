@@ -92,12 +92,12 @@ const EditableCell = ({
         record &&
         record.header &&
         record.children.length > 0 &&
-        dataIndex === "quantity"
+        (dataIndex === "quantity" || dataIndex === "total")
     ) {
         const total = record.children
-            .map((el) => el.quantity)
+            .map((el) => el[dataIndex])
             .reduce((accu, curr) => accu + curr);
-        console.log(record.children.map((el) => el.quantity));
+        console.log(dataIndex, total);
         childNode = total;
     }
 
@@ -129,10 +129,28 @@ export default class BudgetPage extends Component {
                 title: "Total",
                 dataIndex: "total",
                 render: (text, record) => {
-                    let total =
-                        Number.parseInt(record.quantity) * Number.parseFloat(record.rate);
-                    if (isNaN(total)) total = 0;
-                    return `$${total.toFixed(2)}`;
+                    if (!record.header) {
+                        let total =
+                            Number.parseInt(record.quantity) *
+                            Number.parseFloat(record.rate);
+                        if (isNaN(total)) total = 0;
+                        return `$${total.toFixed(2)}`;
+                    } else {
+                        let total = record.children
+                            .map((el) => {
+                                if (
+                                    !isNaN(Number.parseInt(el.quantity)) &&
+                                    !isNaN(Number.parseFloat(el.rate))
+                                ) {
+                                    return (
+                                        Number.parseInt(el.quantity) *
+                                        Number.parseFloat(el.rate)
+                                    );
+                                } else return 0;
+                            })
+                            .reduce((acc, curr) => acc + curr, 0);
+                        return `$${total.toFixed(2)}`;
+                    }
                 },
             },
             {
@@ -280,6 +298,7 @@ export default class BudgetPage extends Component {
                     dataSource={pageData.items}
                     columns={columns}
                     summary={(pageData) => {
+                        console.log(pageData);
                         let total = 0;
                         pageData.forEach(({ quantity, rate }) => {
                             if (
