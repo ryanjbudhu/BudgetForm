@@ -1,7 +1,8 @@
 import React, { Component, useContext, useState, useEffect, useRef } from "react";
 import styles from "./BudgetPage.module.scss";
 
-import { Table, Input, InputNumber, Popconfirm, Form, Button } from "antd";
+import { Table, Input, InputNumber, Popconfirm, Form, Button, Typography } from "antd";
+const { Title } = Typography;
 
 const capitalize = (tocap) => tocap.charAt(0).toUpperCase() + tocap.slice(1);
 
@@ -117,7 +118,6 @@ export default class BudgetPage extends Component {
                 title: "Total",
                 dataIndex: "total",
                 render: (text, record) => {
-                    console.log(record);
                     let total =
                         Number.parseInt(record.quantity) * Number.parseFloat(record.rate);
                     if (isNaN(total)) total = 0;
@@ -218,7 +218,6 @@ export default class BudgetPage extends Component {
                 ...child,
                 ...row,
             });
-            console.log(newData[hIndex]);
         } else {
             newData.splice(hIndex, 1, { ...item, ...row });
         }
@@ -251,7 +250,7 @@ export default class BudgetPage extends Component {
         });
         return (
             <div className={styles.content}>
-                <h1>{this.props.pageData.label}</h1>
+                <Title>{this.props.pageData.label}</Title>
                 <Button
                     onClick={this.handleAdd}
                     type="primary"
@@ -260,7 +259,7 @@ export default class BudgetPage extends Component {
                     }}
                     ref={this.addWrapper}
                 >
-                    Add a row
+                    Add a Section
                 </Button>
                 <Table
                     components={components}
