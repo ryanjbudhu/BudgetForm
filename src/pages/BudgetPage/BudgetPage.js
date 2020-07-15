@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { Component, useContext, useState, useEffect, useRef } from "react";
 import styles from "./BudgetPage.module.scss";
 
-import { Table, Input, InputNumber, Popconfirm, Form, Button } from "antd";
+import { Table, Input, Popconfirm, Form, Button } from "antd";
 
 const capitalize = (tocap) => tocap.charAt(0).toUpperCase() + tocap.slice(1);
 
@@ -87,92 +87,78 @@ const EditableCell = ({
     return <td {...restProps}>{childNode}</td>;
 };
 
-
-
 export default class BudgetPage extends Component {
     constructor(props) {
         super(props);
-let newObj = props.data[props.step].items[0];
-    const columnNames = Object.keys(newObj).filter(
-        (key) => key !== "key" && key !== "children"
-    );
-    this.columns = columnNames.map((key) => ({
-        title: capitalize(key),
-        dataIndex: key,
-        inputType: key === "name" ? "text" : "number",
-        editable: true,
-        key: key,
-    }));
-        this.columns.push(
-            {
-                title: "operation",
-                dataIndex: "operation",
-                render: (text, record) =>
-                    this.state.dataSource.length >= 1 ? (
+        this.addWrapper = React.createRef();
+
+        let newObj = this.props.pageData.items[0];
+        const columnNames = Object.keys(newObj).filter(
+            (key) => key !== "key" && key !== "children"
+        );
+        this.columns = columnNames.map((key) => ({
+            title: capitalize(key),
+            dataIndex: key,
+            inputType: key === "name" ? "text" : "number",
+            editable: true,
+            key: key,
+        }));
+        this.columns.push({
+            title: "operation",
+            dataIndex: "operation",
+            render: (text, record) =>
+                this.props.pageData.items.length >= 1 ? (
+                    <>
+                        <Button
+                            type="link"
+                            onClick={() => this.handleAddChild(record.key)}
+                        >
+                            Add
+                        </Button>
                         <Popconfirm
                             title="Sure to delete?"
                             onConfirm={() => this.handleDelete(record.key)}
                         >
-                            <a>Delete</a>
+                            <Button type="link">Delete</Button>
                         </Popconfirm>
-                    ) : null,
-            }
-        );
-        this.state = {
-            dataSource: [
-                {
-                    key: "0",
-                    name: "Edward King 0",
-                    age: "32",
-                    address: "London, Park Lane no. 0",
-                },
-                {
-                    key: "1",
-                    name: "Edward King 1",
-                    age: "32",
-                    address: "London, Park Lane no. 1",
-                },
-            ],
-            count: 2,
-        };
+                    </>
+                ) : null,
+        });
+        console.log(this.columns);
+        console.log(this.props.pageData.items);
     }
-    /** TODO
-     *  change this.setState to props.setData
-     */
 
     handleDelete = (key) => {
-        const dataSource = [...this.state.dataSource];
-        this.setState({
-            dataSource: dataSource.filter((item) => item.key !== key),
-        });
+        const newPageData = [...this.props.pageData.items];
+        this.props.setPageData(newPageData.filter((item) => item.key !== key));
     };
 
     handleAdd = () => {
-        const { count, dataSource } = this.state;
+        const { pageData } = this.props;
+        const count = pageData.items.length;
         const newData = {
             key: count,
-            name: `Edward King ${count}`,
+            name: `Item ${count}`,
             quantity: 0,
             rate: 0,
         };
-        this.setState({
-            dataSource: [...dataSource, newData],
-            count: count + 1,
-        });
+        this.props.setPageData([...pageData.items, newData]);
+    };
+
+    handleAddChild = (key) => {
+        console.log(key);
     };
 
     handleSave = (row) => {
-        const newData = [...this.state.dataSource];
+        const newData = [...this.props.pageData.items];
         const index = newData.findIndex((item) => row.key === item.key);
         const item = newData[index];
         newData.splice(index, 1, { ...item, ...row });
-        this.setState({
-            dataSource: newData,
-        });
+        this.props.setPageData(newData);
     };
 
     render() {
-        const { dataSource } = this.state;
+        const { pageData } = this.props;
         const components = {
             body: {
                 row: EditableRow,
@@ -196,13 +182,15 @@ let newObj = props.data[props.step].items[0];
             };
         });
         return (
-            <div>
+            <div className={styles.content}>
+                <h1>{this.props.pageData.label}</h1>
                 <Button
                     onClick={this.handleAdd}
                     type="primary"
                     style={{
                         marginBottom: 16,
                     }}
+                    ref={this.addWrapper}
                 >
                     Add a row
                 </Button>
@@ -210,7 +198,7 @@ let newObj = props.data[props.step].items[0];
                     components={components}
                     rowClassName={() => "editable-row"}
                     bordered
-                    dataSource={dataSource}
+                    dataSource={pageData.items}
                     columns={columns}
                 />
             </div>
@@ -220,9 +208,6 @@ let newObj = props.data[props.step].items[0];
 
 // export default function BudgetPage(props) {
 //     console.log(props.data[props.step]);
-
-    
-    
 
 //     const [form] = Form.useForm();
 //     // const [data, setData] = useState(props);
