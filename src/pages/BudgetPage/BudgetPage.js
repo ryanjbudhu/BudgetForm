@@ -88,6 +88,17 @@ const EditableCell = ({
                 {children}
             </div>
         );
+    } else if (
+        record &&
+        record.header &&
+        record.children.length > 0 &&
+        dataIndex === "quantity"
+    ) {
+        const total = record.children
+            .map((el) => el.quantity)
+            .reduce((accu, curr) => accu + curr);
+        console.log(record.children.map((el) => el.quantity));
+        childNode = total;
     }
 
     return <td {...restProps}>{childNode}</td>;
