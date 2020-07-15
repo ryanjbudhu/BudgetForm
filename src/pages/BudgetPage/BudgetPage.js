@@ -130,14 +130,6 @@ export default class BudgetPage extends Component {
                 render: (text, record) =>
                     this.props.pageData.items.length >= 1 ? (
                         <>
-                            {record.children !== undefined && !record.header && (
-                                <Button
-                                    type="link"
-                                    onClick={() => this.handleAddChild(record.key)}
-                                >
-                                    Add
-                                </Button>
-                            )}
                             {record.header ? (
                                 <Button
                                     type="link"
@@ -146,6 +138,14 @@ export default class BudgetPage extends Component {
                                     Add
                                 </Button>
                             ) : (
+                                <Popconfirm
+                                    title="Sure to delete?"
+                                    onConfirm={() => this.handleDelete(record.key)}
+                                >
+                                    <Button type="link">Delete</Button>
+                                </Popconfirm>
+                            )}
+                            {record.edit !== undefined && record.edit && (
                                 <Popconfirm
                                     title="Sure to delete?"
                                     onConfirm={() => this.handleDelete(record.key)}
@@ -164,7 +164,7 @@ export default class BudgetPage extends Component {
     handleDelete = (key) => {
         let newPageItems = this.props.pageData.items;
         const index = newPageItems.findIndex((item) => item.key === key.charAt(0));
-        if (!newPageItems[index].header && key.length > 1)
+        if (key.length > 1)
             newPageItems[index].children = newPageItems[index].children.filter(
                 (item) => item.key !== key
             );
@@ -180,7 +180,8 @@ export default class BudgetPage extends Component {
             name: `${pageData.label} Item ${count}`,
             quantity: null,
             rate: null,
-            header: false,
+            header: true,
+            edit: true,
             childCount: 0,
             children: [],
         };
