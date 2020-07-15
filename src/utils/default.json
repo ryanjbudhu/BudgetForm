@@ -4,14 +4,14 @@
         "label": "Labor",
         "items": [
             {
-                "key": 0,
+                "key": "a",
                 "name": "Full Time Personnel",
                 "children": [],
                 "quantity": 0,
                 "rate": 0
             },
             {
-                "key": 1,
+                "key": "b",
                 "name": "Part Time Personnel",
                 "children": [],
                 "quantity": null,
@@ -24,21 +24,21 @@
         "label": "Equiptment and Supplies",
         "items": [
             {
-                "key": 0,
+                "key": "a",
                 "name": "Capital Equipment >5k",
                 "children": [],
                 "quantity": null,
                 "rate": null
             },
             {
-                "key": 1,
+                "key": "b",
                 "name": "Non-Capital Equipment <5k",
                 "children": [],
                 "quantity": null,
                 "rate": null
             },
             {
-                "key": 2,
+                "key": "c",
                 "name": "Consumable Materials and Supplies",
                 "children": [],
                 "quantity": null,
@@ -51,14 +51,14 @@
         "label": "Consultants",
         "items": [
             {
-                "key": 0,
+                "key": "a",
                 "name": "Consultants",
                 "children": [],
                 "quantity": null,
                 "rate": null
             },
             {
-                "key": 1,
+                "key": "b",
                 "name": "Subcontracts",
                 "children": [],
                 "quantity": null,
@@ -71,14 +71,14 @@
         "label": "Non-Personnel Expenses",
         "items": [
             {
-                "key": 0,
+                "key": "a",
                 "name": "Major Operating Expenses",
                 "children": [],
                 "quantity": null,
                 "rate": null
             },
             {
-                "key": 1,
+                "key": "b",
                 "name": "Travel, Meals, Meetings and Registration",
                 "children": [],
                 "quantity": null,
@@ -90,16 +90,22 @@
         "title": "overhead",
         "label": "Overhead",
         "items": [
-            { "key": 0, "name": "Rent", "children": [], "quantity": null, "rate": null },
             {
-                "key": 1,
+                "key": "a",
+                "name": "Rent",
+                "children": [],
+                "quantity": null,
+                "rate": null
+            },
+            {
+                "key": "b",
                 "name": "Utilities",
                 "children": [],
                 "quantity": null,
                 "rate": null
             },
             {
-                "key": 2,
+                "key": "c",
                 "name": "Insurance",
                 "children": [],
                 "quantity": null,
