@@ -9,11 +9,11 @@ const { Header } = Layout;
 let defaultData = require("./utils/default.json");
 const useSessionState = (storageKey) => {
     const [data, setData] = useState(
-        JSON.parse(sessionStorage.getItem(storageKey)) || defaultData
+        JSON.parse(localStorage.getItem(storageKey)) || defaultData
     );
     useEffect(() => {
         const stringData = JSON.stringify(data);
-        sessionStorage.setItem(storageKey, stringData);
+        localStorage.setItem(storageKey, stringData);
     }, [data, storageKey]);
     return [data, setData];
 };
