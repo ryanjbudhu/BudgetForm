@@ -17,7 +17,11 @@ const ExportCSV = ({ csvData, fileName }) => {
     };
 
     return (
-        <Button type="primary" onClick={(e) => exportToCSV(csvData, fileName)}>
+        <Button
+            style={{ marginBottom: "4rem" }}
+            type="primary"
+            onClick={(e) => exportToCSV(csvData, fileName)}
+        >
             Export
         </Button>
     );
