@@ -1,7 +1,7 @@
 import React, { Component, useContext, useState, useEffect, useRef } from "react";
 import styles from "./BudgetPage.module.scss";
 
-import { Table, Input, Popconfirm, Form, Button } from "antd";
+import { Table, Input, InputNumber, Popconfirm, Form, Button } from "antd";
 
 const capitalize = (tocap) => tocap.charAt(0).toUpperCase() + tocap.slice(1);
 
@@ -25,6 +25,7 @@ const EditableCell = ({
     dataIndex,
     record,
     handleSave,
+    inputType,
     ...restProps
 }) => {
     const [editing, setEditing] = useState(false);
@@ -69,7 +70,11 @@ const EditableCell = ({
                     },
                 ]}
             >
-                <Input ref={inputRef} onPressEnter={save} onBlur={save} />
+                {inputRef === "number" ? (
+                    <InputNumber ref={inputRef} onPressEnter={save} onBlur={save} />
+                ) : (
+                    <Input ref={inputRef} onPressEnter={save} onBlur={save} />
+                )}
             </Form.Item>
         ) : (
             <div
@@ -94,7 +99,11 @@ export default class BudgetPage extends Component {
 
         let newObj = this.props.pageData.items[0];
         const columnNames = Object.keys(newObj).filter(
-            (key) => key !== "key" && key !== "children"
+            (key) =>
+                key !== "key" &&
+                key !== "children" &&
+                key !== "header" &&
+                key !== "childCount"
         );
         this.columns = columnNames.map((key) => ({
             title: capitalize(key),
@@ -109,28 +118,35 @@ export default class BudgetPage extends Component {
             render: (text, record) =>
                 this.props.pageData.items.length >= 1 ? (
                     <>
-                        <Button
-                            type="link"
-                            onClick={() => this.handleAddChild(record.key)}
-                        >
-                            Add
-                        </Button>
-                        <Popconfirm
-                            title="Sure to delete?"
-                            onConfirm={() => this.handleDelete(record.key)}
-                        >
-                            <Button type="link">Delete</Button>
-                        </Popconfirm>
+                        {record.header ? (
+                            <Button
+                                type="link"
+                                onClick={() => this.handleAddChild(record.key)}
+                            >
+                                Add
+                            </Button>
+                        ) : (
+                            <Popconfirm
+                                title="Sure to delete?"
+                                onConfirm={() => this.handleDelete(record.key)}
+                            >
+                                <Button type="link">Delete</Button>
+                            </Popconfirm>
+                        )}
                     </>
                 ) : null,
         });
-        console.log(this.columns);
-        console.log(this.props.pageData.items);
     }
 
+    // Only drawback is that you can only have at most 26 main sections per page
+    // keys are: section is [a-z] and subsection is matching [a-z] with [0-9]+ appended
     handleDelete = (key) => {
-        const newPageData = [...this.props.pageData.items];
-        this.props.setPageData(newPageData.filter((item) => item.key !== key));
+        let newPageItems = this.props.pageData.items;
+        const index = newPageItems.findIndex((item) => item.key === key.charAt(0));
+        newPageItems[index].children = newPageItems[index].children.filter(
+            (item) => item.key !== key
+        );
+        this.props.setPageData(newPageItems);
     };
 
     handleAdd = () => {
@@ -141,19 +157,47 @@ export default class BudgetPage extends Component {
             name: `Item ${count}`,
             quantity: 0,
             rate: 0,
+            header: true,
+            childCount: 0,
         };
         this.props.setPageData([...pageData.items, newData]);
     };
 
     handleAddChild = (key) => {
-        console.log(key);
+        const pageItems = this.props.pageData.items;
+        const index = pageItems.findIndex((item) => item.key === key);
+        if (index < 0) {
+            return;
+        }
+        const count = pageItems[index].childCount + 1;
+        pageItems[index].childCount = count;
+        pageItems[index].children.push({
+            key: key + count,
+            name: `Item ${count}`,
+            quantity: 0,
+            rate: 0,
+            header: false,
+        });
+        this.props.setPageData(pageItems);
     };
 
     handleSave = (row) => {
         const newData = [...this.props.pageData.items];
-        const index = newData.findIndex((item) => row.key === item.key);
-        const item = newData[index];
-        newData.splice(index, 1, { ...item, ...row });
+        const hIndex = newData.findIndex((item) => row.key.charAt(0) === item.key);
+        const item = newData[hIndex];
+        if (row.header === undefined || !row.header) {
+            const cIndex = newData[hIndex].children.findIndex(
+                (item) => row.key === item.key
+            );
+            const child = newData[hIndex].children[cIndex];
+            newData[hIndex].children.splice(cIndex, 1, {
+                ...child,
+                ...row,
+            });
+            console.log(newData[hIndex]);
+        } else {
+            newData.splice(hIndex, 1, { ...item, ...row });
+        }
         this.props.setPageData(newData);
     };
 
