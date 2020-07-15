@@ -268,6 +268,27 @@ export default class BudgetPage extends Component {
                     bordered
                     dataSource={pageData.items}
                     columns={columns}
+                    summary={(pageData) => {
+                        let total = 0;
+                        pageData.forEach(({ quantity, rate }) => {
+                            if (
+                                !isNaN(Number.parseInt(quantity)) &&
+                                !isNaN(Number.parseFloat(rate))
+                            )
+                                total +=
+                                    Number.parseInt(quantity) * Number.parseFloat(rate);
+                        });
+                        return (
+                            <Table.Summary.Row>
+                                <Table.Summary.Cell>Total</Table.Summary.Cell>
+                                <Table.Summary.Cell></Table.Summary.Cell>
+                                <Table.Summary.Cell></Table.Summary.Cell>
+                                <Table.Summary.Cell>{`$${total.toFixed(
+                                    2
+                                )}`}</Table.Summary.Cell>
+                            </Table.Summary.Row>
+                        );
+                    }}
                 />
             </div>
         );
