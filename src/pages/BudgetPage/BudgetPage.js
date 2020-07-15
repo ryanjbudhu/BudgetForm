@@ -79,7 +79,7 @@ export default function BudgetPage(props) {
     const save = async (key) => {
         try {
             const row = await form.validateFields();
-            const newData = [...props.data];
+            const newData = [...props.data[props.step]];
             const index = newData.findIndex((item) => key === item.key);
 
             if (index > -1) {
