@@ -305,9 +305,9 @@ export default class BudgetPage extends Component {
                                             Number.parseInt(c.quantity) *
                                             Number.parseFloat(c.rate)
                                     )
-                                    .reduce((acc, curr) => acc + curr)
+                                    .reduce((acc, curr) => acc + curr, 0)
                             )
-                            .reduce((acc, curr) => acc + curr);
+                            .reduce((acc, curr) => acc + curr, 0);
                         return (
                             <Table.Summary.Row>
                                 <Table.Summary.Cell>Total</Table.Summary.Cell>
