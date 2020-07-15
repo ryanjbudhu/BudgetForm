@@ -57,7 +57,7 @@ const EditableCell = ({
 
     let childNode = children;
 
-    if (editable) {
+    if (editable && !record.header) {
         childNode = editing ? (
             <Form.Item
                 style={{
