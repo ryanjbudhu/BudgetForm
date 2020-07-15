@@ -7,8 +7,8 @@
                 "key": "a",
                 "name": "Full Time Personnel",
                 "children": [],
-                "quantity": 0,
-                "rate": 0,
+                "quantity": null,
+                "rate": null,
                 "header": true,
                 "childCount": 0
             },
