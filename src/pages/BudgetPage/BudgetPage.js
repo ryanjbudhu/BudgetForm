@@ -57,7 +57,7 @@ const EditableCell = ({
 
     let childNode = children;
 
-    if (editable && !record.header) {
+    if (editable && (!record.header || (record.edit && dataIndex === "name"))) {
         childNode = editing ? (
             <Form.Item
                 style={{
@@ -92,6 +92,23 @@ const EditableCell = ({
                       }).format(Number.parseFloat(children[1]))
                     : children}
             </div>
+        );
+    } else if (
+        record &&
+        record.header &&
+        record.children.length > 0 &&
+        dataIndex === "rate"
+    ) {
+        const total = record.children
+            .map((el) => Number.parseFloat(el[dataIndex]))
+            .reduce((accu, curr) => accu + curr);
+        childNode = (
+            <Text strong>
+                {new Intl.NumberFormat("en-US", {
+                    style: "currency",
+                    currency: "USD",
+                }).format(total / record.children.length)}
+            </Text>
         );
     } else if (
         record &&
@@ -138,7 +155,10 @@ export default class BudgetPage extends Component {
                             Number.parseInt(record.quantity) *
                             Number.parseFloat(record.rate);
                         if (isNaN(total)) total = 0;
-                        return `$${total.toFixed(2)}`;
+                        return new Intl.NumberFormat("en-US", {
+                            style: "currency",
+                            currency: "USD",
+                        }).format(total);
                     } else {
                         let total = record.children
                             .map((el) => {
