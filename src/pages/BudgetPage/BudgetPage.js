@@ -85,7 +85,12 @@ const EditableCell = ({
                 }}
                 onClick={toggleEdit}
             >
-                {children}
+                {dataIndex === "rate"
+                    ? new Intl.NumberFormat("en-US", {
+                          style: "currency",
+                          currency: "USD",
+                      }).format(Number.parseFloat(children[1]))
+                    : children}
             </div>
         );
     } else if (
@@ -148,7 +153,14 @@ export default class BudgetPage extends Component {
                                 } else return 0;
                             })
                             .reduce((acc, curr) => acc + curr, 0);
-                        return <Text strong>{total.toFixed(2)}</Text>;
+                        return (
+                            <Text strong>
+                                {new Intl.NumberFormat("en-US", {
+                                    style: "currency",
+                                    currency: "USD",
+                                }).format(total)}
+                            </Text>
+                        );
                     }
                 },
             },
@@ -315,8 +327,15 @@ export default class BudgetPage extends Component {
                                 <Table.Summary.Cell></Table.Summary.Cell>
                                 <Table.Summary.Cell>
                                     <Text
-                                        style={{ fontWeight: "bolder" }}
-                                    >{`$${total.toFixed(2)}`}</Text>
+                                        style={{
+                                            fontWeight: "bolder",
+                                        }}
+                                    >
+                                        {new Intl.NumberFormat("en-US", {
+                                            style: "currency",
+                                            currency: "USD",
+                                        }).format(total)}
+                                    </Text>
                                 </Table.Summary.Cell>
                             </Table.Summary.Row>
                         );
