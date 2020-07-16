@@ -316,6 +316,7 @@ export default class BudgetPage extends Component {
                     onClick={this.handleAdd}
                     type="primary"
                     style={{
+                        marginTop: 24,
                         marginBottom: 16,
                     }}
                     ref={this.addWrapper}
