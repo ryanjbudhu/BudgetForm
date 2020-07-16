@@ -328,6 +328,8 @@ export default class BudgetPage extends Component {
                     bordered
                     dataSource={pageData.items}
                     columns={columns}
+                    expandable={{ defaultExpandAllRows: true }}
+                    pagination={{ hideOnSinglePage: true }}
                     summary={(pageData) => {
                         const total = pageData
                             .map((el) =>
