@@ -71,7 +71,7 @@ const EditableCell = ({
                     },
                 ]}
             >
-                {inputRef === "number" ? (
+                {inputType === "number" ? (
                     <InputNumber ref={inputRef} onPressEnter={save} onBlur={save} />
                 ) : (
                     <Input ref={inputRef} onPressEnter={save} onBlur={save} />
@@ -305,6 +305,7 @@ export default class BudgetPage extends Component {
                     editable: col.editable,
                     dataIndex: col.dataIndex,
                     title: col.title,
+                    inputType: col.inputType,
                     handleSave: this.handleSave,
                 }),
             };
