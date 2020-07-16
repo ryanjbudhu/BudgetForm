@@ -48,7 +48,6 @@ const ExportCSV = ({ csvData, fileName }) => {
                 }
                 htotal += headerObj.total;
                 arrData.push(headerObj);
-                // if (childObj !== undefined) arrData.push(childObj);
             });
             arrData.push({
                 pagename: `Total ${pageObj.label}`,
