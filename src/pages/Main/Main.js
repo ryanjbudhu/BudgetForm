@@ -31,6 +31,9 @@ export default function Main(props) {
                     }}
                 >
                     <BudgetSteps onChange={props.onChange} page={props.step} />
+                    <div style={{ textAlign: "center" }}>
+                        <ExportCSV csvData={props.data} fileName={"Pricing and Budget"} />
+                    </div>
                 </Col>
                 <Col span={19} push={5} style={{ textAlign: "center" }}>
                     <BudgetPage
@@ -38,9 +41,7 @@ export default function Main(props) {
                         step={props.step}
                         setPageData={setPageData}
                     />
-                    {props.step + 1 === props.data.length && (
-                        <ExportCSV csvData={props.data} fileName={"Pricing and Budget"} />
-                    )}
+                    {/* {props.step + 1 === props.data.length && ()} */}
                 </Col>
             </Row>
         </Content>
