@@ -35,7 +35,7 @@ export default function Main(props) {
                         <ExportCSV csvData={props.data} fileName={"Pricing and Budget"} />
                     </div>
                 </Col>
-                <Col span={19} push={5} style={{ textAlign: "center" }}>
+                <Col span={19} push={5}>
                     <BudgetPage
                         pageData={props.data[props.step]}
                         step={props.step}
