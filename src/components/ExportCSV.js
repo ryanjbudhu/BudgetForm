@@ -9,16 +9,19 @@ const ExportCSV = ({ csvData, fileName }) => {
     const fileExtension = ".xlsx";
 
     const exportToCSV = (csvData, fileName) => {
+        console.log([...csvData]);
         const ws = XLSX.utils.json_to_sheet(csvData);
         const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
         const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
         const data = new Blob([excelBuffer], { type: fileType });
-        FileSaver.saveAs(data, fileName + fileExtension);
+        // FileSaver.saveAs(data, fileName + fileExtension);
     };
 
     return (
         <Button
-            style={{ marginBottom: "4rem" }}
+            style={{
+                marginBottom: "4rem",
+            }}
             type="primary"
             onClick={(e) => exportToCSV(csvData, fileName)}
         >
