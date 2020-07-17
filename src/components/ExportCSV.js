@@ -14,7 +14,6 @@ const ExportCSV = ({ csvData, fileName }) => {
         const convertedData = getOverviewSheet(csvData);
         const ws = XLSX.utils.json_to_sheet(convertedData);
         let wb = XLSX.utils.book_new();
-        // const overviewBook = { Sheets: { data: ws }, SheetNames: ["Overview"] };
         XLSX.utils.book_append_sheet(wb, ws, "Overview");
 
         const detailedSheets = getEachTypeSheet(csvData);
@@ -71,7 +70,7 @@ const ExportCSV = ({ csvData, fileName }) => {
             }
             htotal += headerObj.total;
             if (getChildren && childObj !== undefined) {
-                headers.push(childObj);
+                headers.push([], childObj);
             }
             headers.push(headerObj);
         });
@@ -84,7 +83,7 @@ const ExportCSV = ({ csvData, fileName }) => {
         data.forEach((pageObj) => {
             arrData.push({ pagename: pageObj.label });
             const [pageTotal, pageData] = getPageData(pageObj, false);
-            arrData.push([...pageData]);
+            arrData = arrData.concat(pageData);
             arrData.push({
                 pagename: `Total ${pageObj.label}`,
                 total: pageTotal.toFixed(2),
