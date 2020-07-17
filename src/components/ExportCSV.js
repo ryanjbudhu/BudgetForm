@@ -81,7 +81,7 @@ const ExportCSV = ({ csvData, fileName }) => {
         let arrData = [[]];
         let total = 0;
         data.forEach((pageObj) => {
-            arrData.push({ pagename: pageObj.label });
+            arrData.push([], { pagename: pageObj.label });
             const [pageTotal, pageData] = getPageData(pageObj, false);
             arrData = arrData.concat(pageData);
             arrData.push({
@@ -91,7 +91,7 @@ const ExportCSV = ({ csvData, fileName }) => {
             arrData.push([]);
             total += pageTotal;
         });
-        arrData.push({ pagename: "Total", total: total.toFixed(2) });
+        arrData.push([], { pagename: "Total", total: total.toFixed(2) });
         return arrData;
     };
 
