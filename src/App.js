@@ -22,6 +22,11 @@ function App() {
     const [step, setStep] = useState(0);
     const onChange = (current) => setStep(current);
     const [data, setData] = useSessionState("VLProjectBudget");
+    const setPageData = (pageData) => {
+        const newData = [...data];
+        newData[step].items = pageData;
+        setData(newData);
+    };
     return (
         <Layout>
             <Header
@@ -35,7 +40,12 @@ function App() {
                 <img src={logo} className="App-logo" alt="logo" />
             </Header>
             <Layout>
-                <Main step={step} data={data} setData={setData} onChange={onChange} />
+                <Main
+                    step={step}
+                    data={data}
+                    setPageData={setPageData}
+                    onChange={onChange}
+                />
             </Layout>
         </Layout>
     );

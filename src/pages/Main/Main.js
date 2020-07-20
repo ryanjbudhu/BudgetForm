@@ -9,11 +9,6 @@ import { Layout, Col, Row } from "antd";
 const { Content } = Layout;
 
 export default function Main(props) {
-    const setPageData = (pageData) => {
-        const newData = [...props.data];
-        newData[props.step].items = pageData;
-        props.setData(newData);
-    };
     return (
         <Content>
             <Row className={styles.row}>
@@ -26,7 +21,6 @@ export default function Main(props) {
                         left: 0,
                         backgroundColor: "white",
                         top: "64px",
-                        zIndex: 2,
                         minWidth: "17px",
                     }}
                 >
@@ -39,7 +33,7 @@ export default function Main(props) {
                     <BudgetPage
                         pageData={props.data[props.step]}
                         step={props.step}
-                        setPageData={setPageData}
+                        setPageData={props.setPageData}
                     />
                     {/* {props.step + 1 === props.data.length && ()} */}
                 </Col>
