@@ -18,6 +18,7 @@ const useSessionState = (storageKey) => {
     return [data, setData];
 };
 
+// TODO: change to useReducer and create reducer function
 function App() {
     const [step, setStep] = useState(0);
     const onChange = (current) => setStep(current);
