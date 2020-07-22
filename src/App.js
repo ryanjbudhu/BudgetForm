@@ -7,9 +7,10 @@ import { Layout } from "antd";
 const { Header } = Layout;
 
 let defaultData = require("./utils/default.json");
-const useSessionState = (storageKey) => {
+let defaultInfo = require("./utils/info.json");
+const useSessionState = (storageKey, empty) => {
     const [data, setData] = useState(
-        JSON.parse(localStorage.getItem(storageKey)) || defaultData
+        JSON.parse(localStorage.getItem(storageKey)) || empty
     );
     useEffect(() => {
         const stringData = JSON.stringify(data);
@@ -18,34 +19,18 @@ const useSessionState = (storageKey) => {
     return [data, setData];
 };
 
-// function init() {
-//     return defaultData;
-// }
-
-// function reducer(state, action) {
-//     switch (action.type) {
-//         case "page": // action = {step, pageData}
-//             const newData = [...state.pages];
-//             newData[step].items = action.pageData;
-//             return { ...state, pages: newData };
-//         case "info": // action = {dataItem, infoData}
-//             return { ...state, info: { ...state.info, [action.dataItem]: infoData } };
-//         default:
-//             throw new Error("Action of unknown type.");
-//     }
-// }
-
 // TODO: change to useReducer and create reducer function
 function App() {
     const [step, setStep] = useState(0);
     const onChange = (current) => setStep(current);
-    const [data, setData] = useSessionState("VLProjectBudget");
+    const [data, setData] = useSessionState("VLProjectBudget", defaultData);
     const setPageData = (pageData) => {
         const newData = [...data];
         newData[step].items = pageData;
         setData(newData);
     };
-    // const [state, dispatch] = useReducer(reducer, init);
+    const [info, setInfo] = useSessionState("VLProjectBudgetInfo", defaultInfo);
+
     return (
         <Layout>
             <Header
