@@ -3,6 +3,7 @@ import React from "react";
 import ExportCSV from "../../components/ExportCSV";
 import BudgetSteps from "../../components/BudgetSteps";
 import BudgetPage from "../BudgetPage";
+import BudgetInfo from "../BudgetInfo";
 
 import styles from "./Main.module.scss";
 import { Layout, Col, Row, Button, Space, Popconfirm } from "antd";
@@ -30,11 +31,18 @@ export default function Main(props) {
                     </div>
                 </Col>
                 <Col span={19} push={5}>
-                    <BudgetPage
-                        pageData={props.data.pages[props.step]}
-                        step={props.step}
-                        dispatch={props.dispatch}
-                    />
+                    {props.step === 0 ? (
+                        <BudgetInfo
+                            dispatch={props.dispatch}
+                            infoData={props.data.info}
+                        />
+                    ) : (
+                        <BudgetPage
+                            pageData={props.data.pages[props.step - 1]}
+                            step={props.step}
+                            dispatch={props.dispatch}
+                        />
+                    )}
                 </Col>
             </Row>
         </Content>

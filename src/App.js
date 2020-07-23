@@ -15,10 +15,19 @@ function reducer(state, action) {
             newData[action.step].items = action.pageData;
             return { ...state, pages: newData };
         case "info": // action = {dataItem, infoData}
-            return {
-                ...state,
-                info: { ...state.info, [action.dataItem]: action.infoData },
-            };
+            let newInfo = state.info;
+            for (const [key, value] of Object.entries(action.payload)) {
+                if (value === undefined || value === null) continue;
+                if (key === "range") {
+                    const [start, end] = value;
+                    newInfo.start = start.unix();
+                    newInfo.end = end.unix();
+                } else {
+                    newInfo[key] = value;
+                }
+            }
+            console.log(newInfo);
+            return { ...state, info: newInfo };
         case "reset":
             return defaultData;
         default:
