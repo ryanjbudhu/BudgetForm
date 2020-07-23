@@ -229,7 +229,12 @@ export default class BudgetPage extends Component {
                 (item) => item.key !== key
             );
         else newPageItems = newPageItems.filter((item) => item.key !== key);
-        this.props.setPageData(newPageItems);
+        // this.props.setPageData(newPageItems);
+        this.props.dispatch({
+            type: "page",
+            step: this.props.step,
+            pageData: newPageItems,
+        });
     };
 
     handleAdd = () => {
@@ -245,7 +250,12 @@ export default class BudgetPage extends Component {
             childCount: 0,
             children: [],
         };
-        this.props.setPageData([...pageData.items, newData]);
+        // this.props.setPageData([...pageData.items, newData]);
+        this.props.dispatch({
+            type: "page",
+            step: this.props.step,
+            pageData: [...pageData.items, newData],
+        });
     };
 
     handleAddChild = (key) => {
@@ -263,7 +273,8 @@ export default class BudgetPage extends Component {
             rate: 0,
             header: false,
         });
-        this.props.setPageData(pageItems);
+        //this.props.setPageData(pageItems);
+        this.props.dispatch({ type: "page", step: this.props.step, pageData: pageItems });
     };
 
     handleSave = (row) => {
@@ -282,7 +293,8 @@ export default class BudgetPage extends Component {
         } else {
             newData.splice(hIndex, 1, { ...item, ...row });
         }
-        this.props.setPageData(newData);
+        // this.props.setPageData(newData);
+        this.props.dispatch({ type: "page", step: this.props.step, pageData: newData });
     };
 
     render() {
