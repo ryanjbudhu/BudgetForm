@@ -11,7 +11,7 @@ const ExportCSV = ({ csvData, fileName }) => {
     // TODO: format the excel to look nice
 
     const exportToCSV = (csvData, fileName) => {
-        const convertedData = getOverviewSheet(csvData);
+        const convertedData = getOverviewSheet(csvData.pages);
         const ws = XLSX.utils.json_to_sheet(convertedData);
         let wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, "Overview");
