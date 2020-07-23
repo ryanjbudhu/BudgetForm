@@ -19,6 +19,8 @@ function reducer(state, action) {
                 ...state,
                 info: { ...state.info, [action.dataItem]: action.infoData },
             };
+        case "reset":
+            return defaultData;
         default:
             throw new Error("Action of unknown type.");
     }
