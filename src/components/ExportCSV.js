@@ -16,7 +16,7 @@ const ExportCSV = ({ csvData, fileName }) => {
         let wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, "Overview");
 
-        const detailedSheets = getEachTypeSheet(csvData);
+        const detailedSheets = getEachTypeSheet(csvData.pages);
         detailedSheets.forEach(({ sheetName, sheetData }) => {
             const pageSheet = XLSX.utils.json_to_sheet(sheetData);
             XLSX.utils.book_append_sheet(wb, pageSheet, sheetName);
