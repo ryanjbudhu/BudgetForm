@@ -6,6 +6,7 @@ import {
     UsergroupAddOutlined,
     DollarOutlined,
     BankOutlined,
+    InfoCircleOutlined,
 } from "@ant-design/icons";
 import styles from "./BudgetSteps.module.scss";
 
@@ -19,6 +20,7 @@ export default function BudgetSteps(props) {
             onChange={props.onChange}
             className={styles.stepsParent}
         >
+            <Step title="Information" icon={<InfoCircleOutlined />} />
             <Step title="Labor" icon={<UserOutlined />} />
             <Step title="Equiptment and Supplies" icon={<ToolOutlined />} />
             <Step title="Consultants" icon={<UsergroupAddOutlined />} />
