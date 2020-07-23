@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useReducer } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 
@@ -7,29 +7,32 @@ import { Layout } from "antd";
 const { Header } = Layout;
 
 let defaultData = require("./utils/default.json");
-let defaultInfo = require("./utils/info.json");
-const useSessionState = (storageKey, empty) => {
-    const [data, setData] = useState(
-        JSON.parse(localStorage.getItem(storageKey)) || empty
-    );
-    useEffect(() => {
-        const stringData = JSON.stringify(data);
-        localStorage.setItem(storageKey, stringData);
-    }, [data, storageKey]);
-    return [data, setData];
-};
+
+function reducer(state, action) {
+    switch (action.type) {
+        case "page": // action = {step, pageData}
+            const newData = [...state.pages];
+            newData[action.step].items = action.pageData;
+            return { ...state, pages: newData };
+        case "info": // action = {dataItem, infoData}
+            return {
+                ...state,
+                info: { ...state.info, [action.dataItem]: action.infoData },
+            };
+        default:
+            throw new Error("Action of unknown type.");
+    }
+}
 
 // TODO: change to useReducer and create reducer function
 function App() {
     const [step, setStep] = useState(0);
     const onChange = (current) => setStep(current);
-    const [data, setData] = useSessionState("VLProjectBudget", defaultData);
-    const setPageData = (pageData) => {
-        const newData = [...data];
-        newData[step].items = pageData;
-        setData(newData);
-    };
-    const [info, setInfo] = useSessionState("VLProjectBudgetInfo", defaultInfo);
+    const localState = JSON.parse(localStorage.getItem("VLProjectBudget")) || defaultData;
+    const [data, dispatch] = useReducer(reducer, localState || defaultData);
+    useEffect(() => {
+        localStorage.setItem("VLProjectBudget", JSON.stringify(data));
+    }, [data]);
 
     return (
         <Layout>
@@ -44,12 +47,7 @@ function App() {
                 <img src={logo} className="App-logo" alt="logo" />
             </Header>
             <Layout>
-                <Main
-                    step={step}
-                    data={data}
-                    setPageData={setPageData}
-                    onChange={onChange}
-                />
+                <Main step={step} data={data} dispatch={dispatch} onChange={onChange} />
             </Layout>
         </Layout>
     );
