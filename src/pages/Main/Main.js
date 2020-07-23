@@ -12,18 +12,7 @@ export default function Main(props) {
     return (
         <Content>
             <Row className={styles.row}>
-                <Col
-                    span={5}
-                    pull={5}
-                    style={{
-                        height: "100vh",
-                        position: "fixed",
-                        left: 0,
-                        backgroundColor: "white",
-                        top: "64px",
-                        minWidth: "17px",
-                    }}
-                >
+                <Col span={5} pull={5} className={styles.col}>
                     <BudgetSteps onChange={props.onChange} page={props.step} />
                     <div style={{ textAlign: "center" }}>
                         <ExportCSV csvData={props.data} fileName={"Pricing and Budget"} />
@@ -31,11 +20,10 @@ export default function Main(props) {
                 </Col>
                 <Col span={19} push={5}>
                     <BudgetPage
-                        pageData={props.data[props.step]}
+                        pageData={props.data.pages[props.step]}
                         step={props.step}
-                        setPageData={props.setPageData}
+                        dispatch={props.dispatch}
                     />
-                    {/* {props.step + 1 === props.data.length && ()} */}
                 </Col>
             </Row>
         </Content>
