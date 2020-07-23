@@ -3,8 +3,8 @@
         "name": "",
         "project": "",
         "division": "",
-        "start": "",
-        "end": "",
+        "start": null,
+        "end": null,
         "grant": null,
         "contact": "",
         "phone": ""
