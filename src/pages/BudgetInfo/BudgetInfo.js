@@ -60,7 +60,7 @@ export default function BudgetInfo(props) {
                     <Input onPressEnter={save} onBlur={save} />
                 </Form.Item>
                 <Form.Item name="phone" label="Phone Number">
-                    <Input onPressEnter={save} onBlur={save} />
+                    <Input type="tel" onPressEnter={save} onBlur={save} />
                 </Form.Item>
             </Form>
         </div>
