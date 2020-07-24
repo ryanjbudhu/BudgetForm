@@ -26,7 +26,6 @@ function reducer(state, action) {
                     newInfo[key] = value;
                 }
             }
-            console.log(newInfo);
             return { ...state, info: newInfo };
         case "reset":
             return defaultData;
