@@ -8,7 +8,7 @@ const { Title } = Typography;
 const { RangePicker } = DatePicker;
 
 const formItemLayout = {
-    labelCol: { span: 4 },
+    labelCol: { xs: 16, sm: 14, md: 12, lg: 8, xl: 6, xxl: 4 },
     wrapperCol: { span: 16 },
 };
 const dateFormat = "MM/DD/YYYY";
@@ -21,7 +21,7 @@ export default function BudgetInfo(props) {
     };
     return (
         <div className={styles.content}>
-            <Title>Information</Title>
+            <Title className={styles.pageTitle}>Information</Title>
             <Form
                 form={form}
                 {...formItemLayout}

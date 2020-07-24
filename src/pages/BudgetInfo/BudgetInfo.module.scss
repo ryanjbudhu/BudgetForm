@@ -1,3 +1,15 @@
 .content {
     margin: 7rem;
 }
+
+.pageTitle {
+    font-size: 5vw !important;
+    color: blue !important;
+}
+
+@media screen and (min-width: 992px) {
+    .pageTitle {
+        font-size: 46px !important;
+        color: red !important;
+    }
+}
