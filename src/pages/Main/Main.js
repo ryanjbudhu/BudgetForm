@@ -39,7 +39,7 @@ export default function Main(props) {
                     ) : (
                         <BudgetPage
                             pageData={props.data.pages[props.step - 1]}
-                            step={props.step}
+                            step={props.step - 1}
                             dispatch={props.dispatch}
                         />
                     )}
