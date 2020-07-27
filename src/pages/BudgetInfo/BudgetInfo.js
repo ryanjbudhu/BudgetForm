@@ -31,7 +31,10 @@ export default function BudgetInfo(props) {
                     division: props.infoData.division,
                     range:
                         props.infoData.start && props.infoData.end
-                            ? [moment(props.infoData.start), moment(props.infoData.end)]
+                            ? [
+                                  moment.unix(props.infoData.start),
+                                  moment.unix(props.infoData.end),
+                              ]
                             : null,
                     grant: props.infoData.grant,
                     contact: props.infoData.contact,
