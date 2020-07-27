@@ -1,7 +1,7 @@
 ## INFO:
 
--   [xlsx](https://www.npmjs.com/package/xlsx) along with [file-saver](https://www.npmjs.com/package/file-saver) were used to format the exported document
--   [AntDesign](https://ant.design) was the UI framework used.
+-   [xlsx](https://www.npmjs.com/package/xlsx) along with [file-saver](https://www.npmjs.com/package/file-saver) were used to format and export the document
+-   [Ant Design](https://ant.design) was the UI framework used.
 
 ## TODO:
 
