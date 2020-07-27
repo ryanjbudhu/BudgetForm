@@ -1,3 +1,14 @@
+## INFO:
+
+-   [xlsx](https://www.npmjs.com/package/xlsx) along with [file-saver](https://www.npmjs.com/package/file-saver) were used to format the exported document
+-   [AntDesign](https://ant.design) was the UI framework used.
+
+## TODO:
+
+-   Constants:
+    -   Fringe Benefits %
+    -   F/A Overhead %
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
