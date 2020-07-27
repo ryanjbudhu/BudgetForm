@@ -22,7 +22,23 @@ const ExportCSV = ({ csvData, fileName }) => {
             XLSX.utils.book_append_sheet(wb, pageSheet, sheetName);
         });
 
-        const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+        wb.Custprops = {
+            Vendor: csvData.info.name,
+            Project: csvData.info.project,
+            Division: csvData.info.division,
+            "Start Date": csvData.info.start,
+            "End Date": csvData.info.end,
+            Grant: csvData.info.grant,
+            Phone: csvData.info.phone,
+        };
+        const excelBuffer = XLSX.write(wb, {
+            bookType: "xlsx",
+            type: "array",
+            Props: {
+                Author: csvData.info.contact,
+                CreatedDate: Date.now().toString(),
+            },
+        });
         const data = new Blob([excelBuffer], { type: fileType });
         FileSaver.saveAs(data, fileName + fileExtension);
     };
