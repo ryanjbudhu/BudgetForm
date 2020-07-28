@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./BudgetInfo.module.scss";
 
-import { Typography, Form, DatePicker, Input, Radio } from "antd";
+import { Typography, Form, DatePicker, Input, InputNumber, Radio, Col, Row } from "antd";
 import moment from "moment";
 
 const { Title } = Typography;
@@ -12,6 +12,7 @@ const formItemLayout = {
     wrapperCol: { span: 16 },
 };
 const dateFormat = "MM/DD/YYYY";
+const percentFormatter = (value) => `${value}%`;
 
 export default function BudgetInfo(props) {
     const [form] = Form.useForm();
@@ -39,6 +40,9 @@ export default function BudgetInfo(props) {
                     grant: props.infoData.grant,
                     contact: props.infoData.contact,
                     phone: props.infoData.phone,
+                    faoff: props.infoData.faoff,
+                    faon: props.infoData.faon,
+                    gross: props.infoData.gross,
                 }}
             >
                 <Form.Item name="name" label="Vendor/Contractor Name">
@@ -65,6 +69,50 @@ export default function BudgetInfo(props) {
                 <Form.Item name="phone" label="Phone Number">
                     <Input type="tel" onPressEnter={save} onBlur={save} />
                 </Form.Item>
+                <Row>
+                    <Col span={8}>
+                        <Form.Item
+                            name="faoff"
+                            label="F&A Rate Off-Site"
+                            labelCol={{ span: 14 }}
+                        >
+                            <InputNumber
+                                formatter={percentFormatter}
+                                onPressEnter={save}
+                                onBlur={save}
+                                min={0}
+                            />
+                        </Form.Item>
+                    </Col>
+                    <Col span={8}>
+                        <Form.Item
+                            name="faon"
+                            label="F&A Rate On-Site"
+                            labelCol={{ span: 14 }}
+                        >
+                            <InputNumber
+                                formatter={percentFormatter}
+                                onPressEnter={save}
+                                onBlur={save}
+                                min={0}
+                            />
+                        </Form.Item>
+                    </Col>
+                    <Col span={8}>
+                        <Form.Item
+                            name="gross"
+                            label="Gross Margin"
+                            labelCol={{ span: 14 }}
+                        >
+                            <InputNumber
+                                formatter={percentFormatter}
+                                onPressEnter={save}
+                                onBlur={save}
+                                min={0}
+                            />
+                        </Form.Item>
+                    </Col>
+                </Row>
             </Form>
         </div>
     );
