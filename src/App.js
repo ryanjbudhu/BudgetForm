@@ -51,6 +51,9 @@ function App() {
         localStorage.setItem("VLProjectBudget", JSON.stringify(data));
     }, [data]);
 
+    if (!data.info || !data.pages) {
+        dispatch({ type: "reset" });
+    }
     return (
         <Layout>
             <Header
