@@ -327,7 +327,7 @@ export default class BudgetPage extends Component {
         });
         return (
             <div className={styles.content}>
-                <Title>{this.props.pageData.label}</Title>
+                <Title className={styles.pageTitle}>{this.props.pageData.label}</Title>
                 <Button
                     onClick={this.handleAdd}
                     type="primary"
