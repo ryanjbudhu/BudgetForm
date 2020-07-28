@@ -11,9 +11,16 @@ let defaultData = require("./utils/default.json");
 function reducer(state, action) {
     switch (action.type) {
         case "page": // action = {step, pageData}
-            const newData = [...state.pages];
-            newData[action.step].items = action.pageData;
-            return { ...state, pages: newData };
+            const newPages = [...state.pages];
+            newPages[action.step].items = action.pageData;
+            return { ...state, pages: newPages };
+        case "comment": // action = {step, comment}
+            const commentPages = [...state.pages];
+            commentPages[action.step].comments = action.comment;
+            return {
+                ...state,
+                pages: commentPages,
+            };
         case "info": // action = {dataItem, infoData}
             let newInfo = state.info;
             for (const [key, value] of Object.entries(action.payload)) {
