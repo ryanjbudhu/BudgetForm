@@ -3,6 +3,7 @@ import styles from "./BudgetPage.module.scss";
 
 import { Table, Input, InputNumber, Popconfirm, Form, Button, Typography } from "antd";
 const { Title, Text } = Typography;
+const { TextArea } = Input;
 
 const capitalize = (tocap) => tocap.charAt(0).toUpperCase() + tocap.slice(1);
 
@@ -297,6 +298,8 @@ export default class BudgetPage extends Component {
         this.props.dispatch({ type: "page", step: this.props.step, pageData: newData });
     };
 
+    handleComment = async () => {};
+
     render() {
         const { pageData } = this.props;
         const components = {
@@ -342,7 +345,9 @@ export default class BudgetPage extends Component {
                     bordered
                     dataSource={pageData.items}
                     columns={columns}
-                    expandable={{ defaultExpandAllRows: true }}
+                    expandable={{
+                        expandRowByClick: true,
+                    }}
                     pagination={{ hideOnSinglePage: true }}
                     summary={(pageData) => {
                         const total = pageData
@@ -358,9 +363,7 @@ export default class BudgetPage extends Component {
                             .reduce((acc, curr) => acc + curr, 0);
                         return (
                             <Table.Summary.Row>
-                                <Table.Summary.Cell>Total</Table.Summary.Cell>
-                                <Table.Summary.Cell></Table.Summary.Cell>
-                                <Table.Summary.Cell></Table.Summary.Cell>
+                                <Table.Summary.Cell colSpan={3}>Total</Table.Summary.Cell>
                                 <Table.Summary.Cell>
                                     <Text
                                         style={{
@@ -377,6 +380,18 @@ export default class BudgetPage extends Component {
                         );
                     }}
                 />
+                <Form.Item style={{ margin: "2rem" }} label="Comments">
+                    <TextArea
+                        value={this.props.pageData.comments}
+                        onChange={(val) => {
+                            this.props.dispatch({
+                                type: "comment",
+                                comment: val.target.value,
+                                step: this.props.step,
+                            });
+                        }}
+                    />
+                </Form.Item>
             </div>
         );
     }
