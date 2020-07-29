@@ -31,6 +31,10 @@ const ExportCSV = ({ csvData, fileName }) => {
             Grant: csvData.info.grant,
             Phone: csvData.info.phone,
         };
+
+        // (start.unix - end.unix)/UNIX_YEAR = diff in years
+        const years = Math.ceil((csvData.info.end - csvData.info.start) / 31557600);
+
         const excelBuffer = XLSX.write(wb, {
             bookType: "xlsx",
             type: "array",
