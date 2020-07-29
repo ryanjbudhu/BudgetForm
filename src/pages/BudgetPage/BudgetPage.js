@@ -350,33 +350,84 @@ export default class BudgetPage extends Component {
                     }}
                     pagination={{ hideOnSinglePage: true }}
                     summary={(pageData) => {
-                        const total = pageData
-                            .map((el) =>
-                                el.children
-                                    .map(
-                                        (c) =>
-                                            Number.parseInt(c.quantity) *
-                                            Number.parseFloat(c.rate)
-                                    )
-                                    .reduce((acc, curr) => acc + curr, 0)
-                            )
-                            .reduce((acc, curr) => acc + curr, 0);
+                        const subsections = pageData.map((el) =>
+                            el.children
+                                .map(
+                                    (c) =>
+                                        Number.parseInt(c.quantity) *
+                                        Number.parseFloat(c.rate)
+                                )
+                                .reduce((acc, curr) => acc + curr, 0)
+                        );
+                        let total = subsections.reduce((acc, curr) => acc + curr, 0);
+                        if (pageData[0].name === "Full Time Personnel")
+                            total +=
+                                subsections[0] * (this.props.info.ftfringe / 100) +
+                                subsections[1] * (this.props.info.ptfringe / 100);
                         return (
-                            <Table.Summary.Row>
-                                <Table.Summary.Cell colSpan={3}>Total</Table.Summary.Cell>
-                                <Table.Summary.Cell>
-                                    <Text
-                                        style={{
-                                            fontWeight: "bolder",
-                                        }}
-                                    >
-                                        {new Intl.NumberFormat("en-US", {
-                                            style: "currency",
-                                            currency: "USD",
-                                        }).format(total)}
-                                    </Text>
-                                </Table.Summary.Cell>
-                            </Table.Summary.Row>
+                            <>
+                                {pageData[0].name === "Full Time Personnel" && (
+                                    <>
+                                        <Table.Summary.Row>
+                                            <Table.Summary.Cell colSpan={2}>
+                                                <Text>Composite Fringes - FT</Text>
+                                            </Table.Summary.Cell>
+                                            <Table.Summary.Cell>
+                                                {this.props.info.ftfringe}%
+                                            </Table.Summary.Cell>
+                                            <Table.Summary.Cell>
+                                                <Text style={{ fontWeight: "bold" }}>
+                                                    {new Intl.NumberFormat("en-US", {
+                                                        style: "currency",
+                                                        currency: "USD",
+                                                    }).format(
+                                                        subsections[0] *
+                                                            (this.props.info.ftfringe /
+                                                                100)
+                                                    )}
+                                                </Text>
+                                            </Table.Summary.Cell>
+                                        </Table.Summary.Row>
+                                        <Table.Summary.Row>
+                                            <Table.Summary.Cell colSpan={2}>
+                                                <Text>Composite Fringes - PT</Text>
+                                            </Table.Summary.Cell>
+                                            <Table.Summary.Cell>
+                                                {this.props.info.ptfringe}%
+                                            </Table.Summary.Cell>
+                                            <Table.Summary.Cell>
+                                                <Text style={{ fontWeight: "bold" }}>
+                                                    {new Intl.NumberFormat("en-US", {
+                                                        style: "currency",
+                                                        currency: "USD",
+                                                    }).format(
+                                                        subsections[1] *
+                                                            (this.props.info.ptfringe /
+                                                                100)
+                                                    )}
+                                                </Text>
+                                            </Table.Summary.Cell>
+                                        </Table.Summary.Row>
+                                    </>
+                                )}
+                                <Table.Summary.Row>
+                                    <Table.Summary.Cell colSpan={3}>
+                                        Total
+                                    </Table.Summary.Cell>
+                                    <Table.Summary.Cell>
+                                        <Text
+                                            style={{
+                                                fontWeight: "bolder",
+                                            }}
+                                        >
+                                            {new Intl.NumberFormat("en-US", {
+                                                style: "currency",
+                                                currency: "USD",
+                                            }).format(total)}
+                                        </Text>
+                                    </Table.Summary.Cell>
+                                </Table.Summary.Row>
+                            </>
                         );
                     }}
                 />
