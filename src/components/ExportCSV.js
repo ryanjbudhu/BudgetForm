@@ -11,11 +11,13 @@ const ExportCSV = ({ csvData, fileName }) => {
     // TODO: format the excel to look nice
 
     const exportToCSV = (csvData, fileName) => {
-        const convertedData = getOverviewSheet(csvData.pages);
+        const convertedData = getOverviewSheet(csvData);
         const ws = XLSX.utils.json_to_sheet(convertedData);
         let wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, "Overview");
 
+        // (start.unix - end.unix)/UNIX_YEAR = diff in years
+        const years = Math.ceil((csvData.info.end - csvData.info.start) / 31557600);
         const detailedSheets = getEachTypeSheet(csvData.pages);
         detailedSheets.forEach(({ sheetName, sheetData }) => {
             const pageSheet = XLSX.utils.json_to_sheet(sheetData);
@@ -31,9 +33,6 @@ const ExportCSV = ({ csvData, fileName }) => {
             Grant: csvData.info.grant,
             Phone: csvData.info.phone,
         };
-
-        // (start.unix - end.unix)/UNIX_YEAR = diff in years
-        const years = Math.ceil((csvData.info.end - csvData.info.start) / 31557600);
 
         const excelBuffer = XLSX.write(wb, {
             bookType: "xlsx",
@@ -57,7 +56,6 @@ const ExportCSV = ({ csvData, fileName }) => {
                 sheetData: sheetData,
             });
         });
-
         return sheets;
     };
 
@@ -99,8 +97,9 @@ const ExportCSV = ({ csvData, fileName }) => {
 
     const getOverviewSheet = (data) => {
         let arrData = [[]];
-        let total = 0;
-        data.forEach((pageObj) => {
+        let esttotal = 0;
+        let direct = 0;
+        data.pages.forEach((pageObj) => {
             arrData.push([], { pagename: pageObj.label });
             const [pageTotal, pageData] = getPageData(pageObj, false);
             arrData = arrData.concat(pageData);
@@ -109,9 +108,29 @@ const ExportCSV = ({ csvData, fileName }) => {
                 total: pageTotal.toFixed(2),
             });
             arrData.push([]);
-            total += pageTotal;
+            esttotal += pageTotal;
+            if (pageObj.title !== "overhead") direct += pageTotal;
         });
-        arrData.push([], { pagename: "Total", total: total.toFixed(2) });
+        arrData.push(
+            [],
+            {
+                pagename: "Total Estimated - Before Margin",
+                total: esttotal.toFixed(2),
+            },
+            {
+                pagename: "Direct Costs (Budget Use Only)",
+                total: direct.toFixed(2),
+            },
+            {
+                pagename: "Gross Margin (Market Based)",
+                total: (data.info.gross * esttotal).toFixed(2),
+            },
+            [],
+            {
+                pagename: "Total Estimated Price",
+                total: (data.info.gross * esttotal + esttotal).toFixed(2),
+            }
+        );
         return arrData;
     };
 
