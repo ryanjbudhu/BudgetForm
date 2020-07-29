@@ -18,6 +18,7 @@ const ExportCSV = ({ csvData, fileName }) => {
 
         // (start.unix - end.unix)/UNIX_YEAR = diff in years
         const years = Math.ceil((csvData.info.end - csvData.info.start) / 31557600);
+        console.log(years);
         const detailedSheets = getEachTypeSheet(csvData.pages);
         detailedSheets.forEach(({ sheetName, sheetData }) => {
             const pageSheet = XLSX.utils.json_to_sheet(sheetData);
