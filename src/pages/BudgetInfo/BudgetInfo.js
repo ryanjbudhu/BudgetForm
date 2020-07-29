@@ -43,6 +43,9 @@ export default function BudgetInfo(props) {
                     faoff: props.infoData.faoff,
                     faon: props.infoData.faon,
                     gross: props.infoData.gross,
+                    ftfringe: props.infoData.ftfringe,
+                    ptfringe: props.infoData.ptfringe,
+                    raise: props.infoData.raise,
                 }}
             >
                 <Form.Item name="name" label="Vendor/Contractor Name">
@@ -109,6 +112,53 @@ export default function BudgetInfo(props) {
                                 onPressEnter={save}
                                 onBlur={save}
                                 min={0}
+                            />
+                        </Form.Item>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col span={8}>
+                        <Form.Item
+                            name="ftfringe"
+                            label="Composite Fringes - FT"
+                            labelCol={{ span: 15 }}
+                        >
+                            <InputNumber
+                                formatter={percentFormatter}
+                                onPressEnter={save}
+                                onBlur={save}
+                                min={0}
+                                max={100}
+                            />
+                        </Form.Item>
+                    </Col>
+                    <Col span={8}>
+                        <Form.Item
+                            name="ptfringe"
+                            label="Composite Fringes - PT"
+                            labelCol={{ span: 15 }}
+                        >
+                            <InputNumber
+                                formatter={percentFormatter}
+                                onPressEnter={save}
+                                onBlur={save}
+                                min={0}
+                                max={100}
+                            />
+                        </Form.Item>
+                    </Col>
+                    <Col span={8}>
+                        <Form.Item
+                            name="raise"
+                            label="Yearly Wage Raise"
+                            labelCol={{ span: 15 }}
+                        >
+                            <InputNumber
+                                formatter={percentFormatter}
+                                onPressEnter={save}
+                                onBlur={save}
+                                min={0}
+                                max={100}
                             />
                         </Form.Item>
                     </Col>
