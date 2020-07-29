@@ -360,8 +360,8 @@ export default class BudgetPage extends Component {
                                 .reduce((acc, curr) => acc + curr, 0)
                         );
                         let total = subsections.reduce((acc, curr) => acc + curr, 0);
-                        const fullFringe = this.props.info.ftfringe;
-                        const partFringe = this.props.info.ptfringe;
+                        const fullFringe = this.props.info.ftfringe || 0;
+                        const partFringe = this.props.info.ptfringe || 0;
                         if (pageData[0].name === "Full Time Personnel")
                             total +=
                                 subsections[0] * (fullFringe / 100) +
