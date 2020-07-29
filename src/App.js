@@ -3,7 +3,7 @@ import logo from "./logo.svg";
 import "./App.css";
 
 import Main from "./pages/Main";
-import { Layout } from "antd";
+import { Layout, Form } from "antd";
 const { Header } = Layout;
 
 let defaultData = require("./utils/default.json");
@@ -43,13 +43,15 @@ function reducer(state, action) {
 
 // TODO: change to useReducer and create reducer function
 function App() {
+    const [form] = Form.useForm();
     const [step, setStep] = useState(0);
     const onChange = (current) => setStep(current);
     const localState = JSON.parse(localStorage.getItem("VLProjectBudget")) || defaultData;
     const [data, dispatch] = useReducer(reducer, localState || defaultData);
     useEffect(() => {
+        form.setFieldsValue(data.info);
         localStorage.setItem("VLProjectBudget", JSON.stringify(data));
-    }, [data]);
+    }, [data, form]);
 
     if (!data.info || !data.pages) {
         dispatch({ type: "reset" });
@@ -67,7 +69,13 @@ function App() {
                 <img src={logo} className="App-logo" alt="logo" />
             </Header>
             <Layout>
-                <Main step={step} data={data} dispatch={dispatch} onChange={onChange} />
+                <Main
+                    form={form}
+                    step={step}
+                    data={data}
+                    dispatch={dispatch}
+                    onChange={onChange}
+                />
             </Layout>
         </Layout>
     );

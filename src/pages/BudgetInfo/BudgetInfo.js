@@ -15,16 +15,15 @@ const dateFormat = "MM/DD/YYYY";
 const percentFormatter = (value) => `${value}%`;
 
 export default function BudgetInfo(props) {
-    const [form] = Form.useForm();
     const save = async () => {
-        const values = await form.validateFields();
+        const values = await props.form.validateFields();
         props.dispatch({ type: "info", payload: values });
     };
     return (
         <div className={styles.content}>
             <Title className={styles.pageTitle}>Information</Title>
             <Form
-                form={form}
+                form={props.form}
                 {...formItemLayout}
                 initialValues={{
                     name: props.infoData.name,

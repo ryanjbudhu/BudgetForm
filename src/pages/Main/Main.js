@@ -35,6 +35,7 @@ export default function Main(props) {
                         <BudgetInfo
                             dispatch={props.dispatch}
                             infoData={props.data.info}
+                            form={props.form}
                         />
                     ) : (
                         <BudgetPage
