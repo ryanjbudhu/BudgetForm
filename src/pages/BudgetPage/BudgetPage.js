@@ -360,10 +360,12 @@ export default class BudgetPage extends Component {
                                 .reduce((acc, curr) => acc + curr, 0)
                         );
                         let total = subsections.reduce((acc, curr) => acc + curr, 0);
+                        const fullFringe = this.props.info.ftfringe;
+                        const partFringe = this.props.info.ptfringe;
                         if (pageData[0].name === "Full Time Personnel")
                             total +=
-                                subsections[0] * (this.props.info.ftfringe / 100) +
-                                subsections[1] * (this.props.info.ptfringe / 100);
+                                subsections[0] * (fullFringe / 100) +
+                                subsections[1] * (partFringe / 100);
                         return (
                             <>
                                 {pageData[0].name === "Full Time Personnel" && (
@@ -373,7 +375,7 @@ export default class BudgetPage extends Component {
                                                 <Text>Composite Fringes - FT</Text>
                                             </Table.Summary.Cell>
                                             <Table.Summary.Cell>
-                                                {this.props.info.ftfringe}%
+                                                {fullFringe}%
                                             </Table.Summary.Cell>
                                             <Table.Summary.Cell>
                                                 <Text style={{ fontWeight: "bold" }}>
@@ -382,8 +384,7 @@ export default class BudgetPage extends Component {
                                                         currency: "USD",
                                                     }).format(
                                                         subsections[0] *
-                                                            (this.props.info.ftfringe /
-                                                                100)
+                                                            (fullFringe / 100)
                                                     )}
                                                 </Text>
                                             </Table.Summary.Cell>
@@ -393,7 +394,7 @@ export default class BudgetPage extends Component {
                                                 <Text>Composite Fringes - PT</Text>
                                             </Table.Summary.Cell>
                                             <Table.Summary.Cell>
-                                                {this.props.info.ptfringe}%
+                                                {partFringe}%
                                             </Table.Summary.Cell>
                                             <Table.Summary.Cell>
                                                 <Text style={{ fontWeight: "bold" }}>
@@ -402,8 +403,7 @@ export default class BudgetPage extends Component {
                                                         currency: "USD",
                                                     }).format(
                                                         subsections[1] *
-                                                            (this.props.info.ptfringe /
-                                                                100)
+                                                            (partFringe / 100)
                                                     )}
                                                 </Text>
                                             </Table.Summary.Cell>
