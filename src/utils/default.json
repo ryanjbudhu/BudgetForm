@@ -90,7 +90,16 @@
                 },
                 {
                     "key": "b",
-                    "name": "Subcontracts",
+                    "name": "Subcontracts < $25K",
+                    "children": [],
+                    "quantity": null,
+                    "rate": null,
+                    "header": true,
+                    "childCount": 0
+                },
+                {
+                    "key": "c",
+                    "name": "Subcontracts > 25K",
                     "children": [],
                     "quantity": null,
                     "rate": null,
