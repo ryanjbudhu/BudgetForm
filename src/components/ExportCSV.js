@@ -1,11 +1,10 @@
 import React from "react";
 import { Button } from "antd";
-import * as FileSaver from "file-saver";
-import * as XLSX from "xlsx";
+import FileSaver from "file-saver";
+import XLSX from "xlsx";
 
 const ExportCSV = ({ csvData, fileName }) => {
-    const fileType = "application/octet-stream";
-    // "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+    const fileType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;";
     const fileExtension = ".xlsx";
 
     // TODO: format the excel to look nice
@@ -18,7 +17,7 @@ const ExportCSV = ({ csvData, fileName }) => {
 
         // (start.unix - end.unix)/UNIX_YEAR = diff in years
         const years = Math.ceil((csvData.info.end - csvData.info.start) / 31557600);
-        console.log(`${years} year(s)`);
+        console.log(`${years} year${years > 1 ? "s" : ""}`);
         const detailedSheets = getEachTypeSheet(csvData);
         detailedSheets.forEach(({ sheetName, sheetData }) => {
             const pageSheet = XLSX.utils.json_to_sheet(sheetData);
@@ -96,12 +95,12 @@ const ExportCSV = ({ csvData, fileName }) => {
             if (header.children.length > 0) {
                 headerObj.rate = headerObj.rate / header.children.length;
             } else if (getChildren) {
-                headers.push([]);
+                headers.push({});
             }
             htotal += headerObj.total;
             subHeaders.push(headerObj);
             headers.push(headerObj);
-            if (getChildren) headers.push([]);
+            if (getChildren) headers.push({});
         });
 
         // Calculate Composite Fringes for labor
@@ -119,7 +118,7 @@ const ExportCSV = ({ csvData, fileName }) => {
         let direct = 0;
         let subcontractCost = 0;
         data.pages.forEach((pageObj) => {
-            arrData.push([], { pagename: pageObj.label });
+            arrData.push({}, { pagename: pageObj.label });
             const [pageTotal, pageData] = getPageData(pageObj, data.info, false);
             arrData = arrData.concat(pageData);
             if (pageObj.title === "consult") {
@@ -159,8 +158,8 @@ const ExportCSV = ({ csvData, fileName }) => {
         });
 
         arrData.push(
-            [],
-            [],
+            {},
+            {},
             {
                 pagename: "Total Estimated - Before Margin",
                 total: esttotal.toFixed(2),
@@ -174,7 +173,7 @@ const ExportCSV = ({ csvData, fileName }) => {
                 rate: `${data.info.gross / 100 || 0}%`,
                 total: ((data.info.gross / 100 || 0) * esttotal).toFixed(2),
             },
-            [],
+            {},
             {
                 pagename: "Total Estimated Price",
                 total: ((data.info.gross / 100 || 0) * esttotal + esttotal).toFixed(2),
