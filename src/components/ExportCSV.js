@@ -129,6 +129,10 @@ const ExportCSV = ({ csvData, fileName }) => {
             if (pageObj.title !== "overhead") {
                 direct += pageTotal;
                 esttotal += pageTotal;
+                arrData.push({
+                    pagename: `Total ${pageObj.label}`,
+                    total: pageTotal.toFixed(2),
+                });
             } else {
                 const rent = pageData.find((val) => val.pagename === "Rent").total;
                 const faOff =
@@ -143,18 +147,18 @@ const ExportCSV = ({ csvData, fileName }) => {
                 arrData.push(
                     {
                         pagename: `NJII - F&A Rate - Calculation Off-Site (${data.info.faoff}%)`,
-                        total: faOff,
+                        total: faOff.toFixed(2),
                     },
                     {
                         pagename: `NJII - F&A Rate - Calculation On-Site (${data.info.faon}%)`,
-                        total: faOn,
+                        total: faOn.toFixed(2),
                     }
                 );
+                arrData.push({
+                    pagename: `Total ${pageObj.label}`,
+                    total: (pageTotal + faOff + faOn).toFixed(2),
+                });
             }
-            arrData.push({
-                pagename: `Total ${pageObj.label}`,
-                total: pageTotal.toFixed(2),
-            });
         });
 
         arrData.push(
@@ -170,7 +174,7 @@ const ExportCSV = ({ csvData, fileName }) => {
             },
             {
                 pagename: "Gross Margin (Market Based)",
-                rate: `${data.info.gross / 100 || 0}%`,
+                rate: `${data.info.gross || 0}%`,
                 total: ((data.info.gross / 100 || 0) * esttotal).toFixed(2),
             },
             {},
