@@ -161,6 +161,9 @@ const ExportCSV = ({ csvData, fileName }) => {
             }
         });
 
+        const revenue = (data.info.gross / 100 || 0) * esttotal + esttotal;
+        const variance = revenue - esttotal;
+
         arrData.push(
             {},
             {},
@@ -183,7 +186,24 @@ const ExportCSV = ({ csvData, fileName }) => {
                 total: ((data.info.gross / 100 || 0) * esttotal + esttotal).toFixed(2),
             }
         );
-        return arrData;
+        const rtnArray = [
+            {},
+            {
+                pagename: "Total Revenue",
+                quantity: "",
+                rate: "",
+                total: Math.round(revenue),
+            },
+            {
+                pagename: "Total Expense",
+                quantity: "",
+                rate: "",
+                total: Math.round(esttotal),
+            },
+            { pagename: "Variance", quantity: "", rate: "", total: Math.round(variance) },
+            {},
+        ];
+        return rtnArray.concat(arrData);
     };
 
     return (
