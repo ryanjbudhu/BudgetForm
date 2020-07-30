@@ -47,7 +47,7 @@
             "items": [
                 {
                     "key": "a",
-                    "name": "Capital Equipment >5k",
+                    "name": "Capital Equipment > $5K",
                     "children": [],
                     "quantity": null,
                     "rate": null,
@@ -56,7 +56,7 @@
                 },
                 {
                     "key": "b",
-                    "name": "Non-Capital Equipment <5k",
+                    "name": "Non-Capital Equipment <= $5K",
                     "children": [],
                     "quantity": null,
                     "rate": null,
