@@ -23,7 +23,7 @@ export default function BudgetSteps(props) {
             <Step title="Information" icon={<InfoCircleOutlined />} />
             <Step title="Labor" icon={<UserOutlined />} />
             <Step title="Equiptment and Supplies" icon={<ToolOutlined />} />
-            <Step title="Consultants" icon={<UsergroupAddOutlined />} />
+            <Step title="Consultants and Contractors" icon={<UsergroupAddOutlined />} />
             <Step title="Non-Personnel Expenses" icon={<DollarOutlined />} />
             <Step title="Overhead" icon={<BankOutlined />} />
         </Steps>
