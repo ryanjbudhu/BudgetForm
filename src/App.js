@@ -55,6 +55,11 @@ function App() {
 
     if (!data.info || !data.pages) {
         dispatch({ type: "reset" });
+    } else if (
+        JSON.stringify(defaultData.pages.map((val) => val.label)) !==
+        JSON.stringify(data.pages.map((val) => val.label))
+    ) {
+        dispatch({ type: "reset" });
     }
     return (
         <Layout>
