@@ -1,5 +1,6 @@
 import React from "react";
-import { Button } from "antd";
+import { Button, Menu, Dropdown } from "antd";
+import { DownOutlined } from "@ant-design/icons";
 import FileSaver from "file-saver";
 import XLSX from "xlsx";
 
@@ -206,16 +207,49 @@ const ExportCSV = ({ csvData, fileName }) => {
         return rtnArray.concat(arrData);
     };
 
+    const handleExport = (e) => {
+        switch (e.key) {
+            case "json":
+                console.log(csvData);
+                FileSaver.saveAs(
+                    new Blob([JSON.stringify(csvData, null, 2)], {
+                        type: "application/json",
+                    }),
+                    `${fileName}.json`
+                );
+                break;
+            case "excel":
+                exportToCSV(csvData, fileName);
+                break;
+            default:
+                console.error("Internal Error", e);
+                break;
+        }
+    };
+
+    const exportOptions = (
+        <Menu onClick={handleExport}>
+            <Menu.Item key="json">To JSON</Menu.Item>
+            <Menu.Item
+                disabled={Object.keys(csvData.info).some(
+                    (key) => csvData.info[key] === "" || csvData.info[key] === null
+                )}
+                key="excel"
+            >
+                To Excel
+            </Menu.Item>
+        </Menu>
+    );
+
     return (
-        <Button
-            disabled={Object.keys(csvData.info).some(
-                (key) => csvData.info[key] === "" || csvData.info[key] === null
-            )}
-            type="primary"
-            onClick={(e) => exportToCSV(csvData, fileName)}
-        >
-            Export
-        </Button>
+        <Dropdown overlay={exportOptions}>
+            <Button
+                type="primary"
+                // onClick={(e) => exportToCSV(csvData, fileName)}
+            >
+                Export <DownOutlined />
+            </Button>
+        </Dropdown>
     );
 };
 
