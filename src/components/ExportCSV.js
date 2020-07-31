@@ -210,7 +210,6 @@ const ExportCSV = ({ csvData, fileName }) => {
     const handleExport = (e) => {
         switch (e.key) {
             case "json":
-                console.log(csvData);
                 FileSaver.saveAs(
                     new Blob([JSON.stringify(csvData, null, 2)], {
                         type: "application/json",
@@ -243,10 +242,7 @@ const ExportCSV = ({ csvData, fileName }) => {
 
     return (
         <Dropdown overlay={exportOptions}>
-            <Button
-                type="primary"
-                // onClick={(e) => exportToCSV(csvData, fileName)}
-            >
+            <Button type="primary">
                 Export <DownOutlined />
             </Button>
         </Dropdown>
