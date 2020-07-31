@@ -34,6 +34,8 @@ function reducer(state, action) {
                 }
             }
             return { ...state, info: newInfo };
+        case "upload": // action = {jsonData}
+            return action.jsonData;
         case "reset":
             return defaultData;
         default:
