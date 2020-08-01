@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./BudgetInfo.module.scss";
 
-import { Typography, Form, DatePicker, Input, InputNumber, Radio, Col, Row } from "antd";
+import { Typography, Form, DatePicker, Input, InputNumber, Radio } from "antd";
 import moment from "moment";
 
 const { Title } = Typography;
@@ -9,7 +9,7 @@ const { RangePicker } = DatePicker;
 
 const formItemLayout = {
     labelCol: { xs: 16, sm: 14, md: 12, lg: 8, xl: 6, xxl: 4 },
-    wrapperCol: { span: 16 },
+    wrapperCol: { span: "16" },
 };
 const dateFormat = "MM/DD/YYYY";
 const percentFormatter = (value) => `${value}%`;
@@ -44,7 +44,6 @@ export default function BudgetInfo(props) {
                     gross: props.infoData.gross,
                     ftfringe: props.infoData.ftfringe,
                     ptfringe: props.infoData.ptfringe,
-                    raise: props.infoData.raise,
                 }}
             >
                 <Form.Item name="name" label="Vendor/Contractor Name">
@@ -71,98 +70,66 @@ export default function BudgetInfo(props) {
                 <Form.Item name="phone" label="Phone Number">
                     <Input type="tel" onPressEnter={save} onBlur={save} />
                 </Form.Item>
-                <Row>
-                    <Col span={8}>
-                        <Form.Item
-                            name="faoff"
-                            label="F&A Rate Off-Site"
-                            labelCol={{ span: 14 }}
-                        >
-                            <InputNumber
-                                formatter={percentFormatter}
-                                onPressEnter={save}
-                                onBlur={save}
-                                min={0}
-                            />
-                        </Form.Item>
-                    </Col>
-                    <Col span={8}>
-                        <Form.Item
-                            name="faon"
-                            label="F&A Rate On-Site"
-                            labelCol={{ span: 14 }}
-                        >
-                            <InputNumber
-                                formatter={percentFormatter}
-                                onPressEnter={save}
-                                onBlur={save}
-                                min={0}
-                            />
-                        </Form.Item>
-                    </Col>
-                    <Col span={8}>
-                        <Form.Item
-                            name="gross"
-                            label="Gross Margin"
-                            labelCol={{ span: 14 }}
-                        >
-                            <InputNumber
-                                formatter={percentFormatter}
-                                onPressEnter={save}
-                                onBlur={save}
-                                min={0}
-                            />
-                        </Form.Item>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col span={8}>
-                        <Form.Item
-                            name="ftfringe"
-                            label="Composite Fringes - FT"
-                            labelCol={{ span: 15 }}
-                        >
-                            <InputNumber
-                                formatter={percentFormatter}
-                                onPressEnter={save}
-                                onBlur={save}
-                                min={0}
-                                max={100}
-                            />
-                        </Form.Item>
-                    </Col>
-                    <Col span={8}>
-                        <Form.Item
-                            name="ptfringe"
-                            label="Composite Fringes - PT"
-                            labelCol={{ span: 15 }}
-                        >
-                            <InputNumber
-                                formatter={percentFormatter}
-                                onPressEnter={save}
-                                onBlur={save}
-                                min={0}
-                                max={100}
-                            />
-                        </Form.Item>
-                    </Col>
-                    <Col span={8}>
-                        <Form.Item
-                            name="raise"
-                            label="Yearly Wage Raise"
-                            labelCol={{ span: 15 }}
-                        >
-                            <InputNumber
-                                formatter={percentFormatter}
-                                onPressEnter={save}
-                                onBlur={save}
-                                min={0}
-                                max={100}
-                            />
-                        </Form.Item>
-                    </Col>
-                </Row>
+
+                <Form.Item name="faoff" label="F&A Rate Off-Site">
+                    <InputNumber
+                        formatter={percentFormatter}
+                        onPressEnter={save}
+                        onBlur={save}
+                        min={0}
+                    />
+                </Form.Item>
+                <Form.Item name="faon" label="F&A Rate On-Site">
+                    <InputNumber
+                        formatter={percentFormatter}
+                        onPressEnter={save}
+                        onBlur={save}
+                        min={0}
+                    />
+                </Form.Item>
+                <Form.Item name="ftfringe" label="Composite Fringes - FT">
+                    <InputNumber
+                        formatter={percentFormatter}
+                        onPressEnter={save}
+                        onBlur={save}
+                        min={0}
+                        max={100}
+                    />
+                </Form.Item>
+                <Form.Item name="ptfringe" label="Composite Fringes - PT">
+                    <InputNumber
+                        formatter={percentFormatter}
+                        onPressEnter={save}
+                        onBlur={save}
+                        min={0}
+                        max={100}
+                    />
+                </Form.Item>
+                <Form.Item name="gross" label="Gross Margin">
+                    <InputNumber
+                        formatter={percentFormatter}
+                        onPressEnter={save}
+                        onBlur={save}
+                        min={0}
+                    />
+                </Form.Item>
             </Form>
         </div>
     );
 }
+
+//  <Col>
+//                         <Form.Item
+//                             name="raise"
+//                             label="Yearly Wage Raise"
+//                             labelCol={{ span: 15 }}
+//                         >
+//                             <InputNumber
+//                                 formatter={percentFormatter}
+//                                 onPressEnter={save}
+//                                 onBlur={save}
+//                                 min={0}
+//                                 max={100}
+//                             />
+//                         </Form.Item>
+//                     </Col>
