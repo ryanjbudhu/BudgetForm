@@ -12,6 +12,7 @@ const ExportCSV = ({ csvData, fileName }) => {
 
     const exportToCSV = (csvData, fileName) => {
         const convertedData = getOverviewSheet(csvData);
+
         const ws = XLSX.utils.json_to_sheet(convertedData);
         let wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, "Overview");
@@ -56,6 +57,7 @@ const ExportCSV = ({ csvData, fileName }) => {
         data.pages.forEach((pageObj) => {
             let [sheetTotal, sheetData] = getPageData(pageObj, data.info, true);
             sheetData.push({ pagename: `Total ${pageObj.label}`, total: sheetTotal });
+            sheetData.push({}, { pagename: "Comments", quantity: pageObj.comments });
             sheets.push({
                 sheetName: pageObj.label,
                 sheetData: sheetData,
@@ -119,7 +121,13 @@ const ExportCSV = ({ csvData, fileName }) => {
         let direct = 0;
         let subcontractCost = 0;
         data.pages.forEach((pageObj) => {
-            arrData.push({}, { pagename: pageObj.label });
+            arrData.push(
+                {},
+                {
+                    pagename: pageObj.label,
+                    comments: pageObj.comments,
+                }
+            );
             const [pageTotal, pageData] = getPageData(pageObj, data.info, false);
             arrData = arrData.concat(pageData);
             if (pageObj.title === "consult") {
@@ -194,12 +202,14 @@ const ExportCSV = ({ csvData, fileName }) => {
                 quantity: "",
                 rate: "",
                 total: Math.round(revenue),
+                comments: "",
             },
             {
                 pagename: "Total Expense",
                 quantity: "",
                 rate: "",
                 total: Math.round(esttotal),
+                comments: "",
             },
             { pagename: "Variance", quantity: "", rate: "", total: Math.round(variance) },
             {},
