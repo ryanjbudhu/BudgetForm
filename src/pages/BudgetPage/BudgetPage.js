@@ -121,6 +121,8 @@ const EditableCell = ({
             .map((el) => Number.parseFloat(el[dataIndex]))
             .reduce((accu, curr) => accu + curr);
         childNode = <Text strong>{total}</Text>;
+    } else if (record && record.header && dataIndex === "name") {
+        restProps.style = { ...restProps.style, fontWeight: "600" };
     }
 
     return <td {...restProps}>{childNode}</td>;
