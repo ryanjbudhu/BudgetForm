@@ -28,6 +28,7 @@ export default function Main(props) {
                         throw new Error("Must be properly formatted JSON.");
                     }
                     props.dispatch({ type: "upload", jsonData: newData });
+                    message.success("Successfully added JSON data!");
                 } catch (e) {
                     message.error(e.message);
                     console.error(e);
